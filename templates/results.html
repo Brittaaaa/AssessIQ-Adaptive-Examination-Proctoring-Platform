@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Assessment Complete | AssessIQ AI</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/result.css') }}">
+</head>
+
+<body>
+
+<div class="results-page">
+
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
+
+    <header class="results-header">
+
+        <a href="{{ url_for('dashboard') }}" class="brand">
+            <span class="brand-mark">A</span>
+            <span class="brand-text">AssessIQ AI</span>
+        </a>
+
+        <a href="{{ url_for('dashboard') }}" class="dashboard-btn">
+            ← Dashboard
+        </a>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
+
+    <main class="results-container">
+
+        {% set exam = report.exam %}
+        {% set score = exam.score or 0 %}
+        {% set correct = exam.correct_count or 0 %}
+        {% set incorrect = exam.incorrect_count or 0 %}
+        {% set unanswered = exam.unanswered_count or 0 %}
+        {% set total = correct + incorrect + unanswered %}
+
+
+        <!-- =================================================
+             INTRO
+             ================================================= -->
+
+        <section class="results-intro">
+
+            <div class="intro-left">
+
+                <span class="eyebrow">
+                    Assessment Complete
+                </span>
+
+                <h1>
+                    Your performance at a glance
+                </h1>
+
+                <p>
+                    Here's how you performed in your latest assessment.
+                </p>
+
+                <div class="exam-meta">
+
+                    <span class="meta-item">
+                        {{ domain_name }}
+                    </span>
+
+                    <span class="meta-item">
+                        {{ exam.difficulty|title }}
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SCORE + STATISTICS
+             ================================================= -->
+
+        <section class="score-section">
+
+
+            <!-- SCORE HERO -->
+
+            <div class="score-card">
+
+                <div class="score-ring"
+                     style="--score: {{ score }};">
+
+                    <div class="score-ring-inner">
+
+                        <strong>
+                            {{ score }}%
+                        </strong>
+
+                        <span>
+                            Score
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="score-info">
+
+                    <span class="card-label">
+                        Overall Performance
+                    </span>
+
+                    <h2>
+
+                        {% if score >= 80 %}
+                            Excellent Progress
+                        {% elif score >= 60 %}
+                            Good Progress
+                        {% elif score >= 40 %}
+                            Keep Improving
+                        {% else %}
+                            More Practice Needed
+                        {% endif %}
+
+                    </h2>
+
+                    <p>
+
+                        {% if score >= 80 %}
+                            You completed the assessment with strong
+                            performance. Your knowledge is developing well.
+                        {% elif score >= 60 %}
+                            You have a solid foundation. A little more
+                            practice can take your performance to the next level.
+                        {% elif score >= 40 %}
+                            You have made a start. Focus on your weaker
+                            topics and keep practicing.
+                        {% else %}
+                            This assessment highlights areas that need
+                            more attention. Keep practicing and try again.
+
+                        {% endif %}
+
+                    </p>
+
+                    <div class="exam-meta">
+
+                        <span class="meta-item">
+                            {{ domain_name }}
+                        </span>
+
+                        <span class="meta-item">
+                            {{ exam.difficulty|title }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SCORE -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    ★
+                </div>
+
+                <div class="stat-content">
+
+                    <strong>
+                        {{ score }}%
+                    </strong>
+
+                    <span>
+                        Score
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- CORRECT -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon correct-icon">
+                    ✓
+                </div>
+
+                <div class="stat-content">
+
+                    <strong>
+                        {{ correct }}
+                    </strong>
+
+                    <span>
+                        Correct
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- INCORRECT -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon incorrect-icon">
+                    ×
+                </div>
+
+                <div class="stat-content">
+
+                    <strong>
+                        {{ incorrect }}
+                    </strong>
+
+                    <span>
+                        Incorrect
+                    </span>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             YOUR PERFORMANCE
+             ================================================= -->
+
+        <section>
+
+            <div class="section-label">
+                YOUR PERFORMANCE
+            </div>
+
+
+            <div class="content-grid">
+
+
+                <!-- =========================================
+                     TOPIC PERFORMANCE
+                     ========================================= -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <h2>
+                            Topic Performance
+                        </h2>
+
+                        <span class="topic-count">
+                            {{ report.topics|length }} topics
+                        </span>
+
+                    </div>
+
+
+                    <div class="topic-list">
+
+                        {% for topic in report.topics %}
+
+                        <div class="topic-row">
+
+                            <div class="topic-top">
+
+                                <strong>
+                                    {{ topic.topic }}
+                                </strong>
+
+                                <span>
+                                    {{ topic.percentage }}%
+                                </span>
+
+                            </div>
+
+
+                            <div class="progress-track">
+
+                                <div
+                                    class="progress-fill
+                                    {% if topic.percentage >= 80 %}
+                                        good
+                                    {% elif topic.percentage >= 60 %}
+                                        average
+                                    {% else %}
+                                        weak
+                                    {% endif %}"
+                                    style="--progress: {{ topic.percentage }}%;"
+                                >
+                                </div>
+
+                            </div>
+
+
+                            <div class="topic-bottom">
+
+                                <span class="topic-status">
+
+                                    {% if topic.percentage >= 80 %}
+
+                                        Strong
+
+                                    {% elif topic.percentage >= 60 %}
+
+                                        Developing
+
+                                    {% else %}
+
+                                        Needs Practice
+
+                                    {% endif %}
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        {% else %}
+
+                        <div class="no-analysis">
+                            Topic performance data is not available yet.
+                        </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================================
+                     PERFORMANCE INSIGHT
+                     ========================================= -->
+
+                <div class="insight-card">
+
+                    <div class="insight-icon">
+                        ✦
+                    </div>
+
+
+                    <div class="insight-content">
+
+                        <h3>
+                            Performance Insight
+                        </h3>
+
+
+                        {% if report.strongest_message %}
+
+                        <p>
+                            <strong>Strongest area:</strong>
+                            {{ report.strongest_message }}
+                        </p>
+
+                        {% endif %}
+
+
+                        {% if report.improvement_message %}
+
+                        <p>
+                            <strong>Needs improvement:</strong>
+                            {{ report.improvement_message }}
+                        </p>
+
+                        {% endif %}
+
+
+                        {% if report.insight %}
+
+                        <p>
+                            {{ report.insight }}
+                        </p>
+
+                        {% endif %}
+
+
+                        {% if exam.knowledge_level %}
+
+                        <div class="analysis-block">
+
+                            <div class="analysis-heading">
+
+                                <span class="analysis-dot"></span>
+
+                                Knowledge Level
+
+                            </div>
+
+                            <p>
+                                Your current knowledge level is
+                                <strong>
+                                    {{ exam.knowledge_level|title }}
+                                </strong>.
+                            </p>
+
+                        </div>
+
+                        {% endif %}
+
+
+                        {% if report.summary %}
+
+                        <div class="analysis-block">
+
+                            <div class="analysis-heading">
+
+                                <span class="analysis-dot"></span>
+
+                                Assessment Summary
+
+                            </div>
+
+                            <p>
+                                {{ report.summary }}
+                            </p>
+
+                        </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             NEXT CHALLENGE
+             ================================================= -->
+
+        <section>
+
+            <div class="section-label">
+                NEXT CHALLENGE
+            </div>
+
+
+            <div class="recommendation-grid">
+
+                <div class="recommendation-card">
+
+                    <div class="recommendation-icon">
+                        →
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+                            Ready for the next level?
+                        </h3>
+
+                        <p>
+                            Strengthen your weakest topics with a new assessment.
+                        </p>
+
+                    </div>
+
+
+                    <a href="{{ url_for('dashboard') }}"
+                       class="primary-btn"
+                       style="margin-left:auto; position:relative; z-index:3;">
+
+                        TAKE ANOTHER TEST →
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             REVIEW ANSWERS
+             ================================================= -->
+
+        <div class="review-card">
+
+            <div class="review-info">
+
+                <h3>
+                    Want to understand every answer?
+                </h3>
+
+                <p>
+                    Review your answers and identify where you can improve.
+                </p>
+
+            </div>
+
+
+            <div class="review-action">
+
+                <a href="{{ url_for('answer_review', exam_id=exam.id) }}"
+                   class="answer-review-btn">
+
+                    REVIEW ANSWERS →
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ADDITIONAL PERFORMANCE DETAILS
+             ================================================= -->
+
+        <div class="bottom-grid">
+
+
+            <!-- SECURITY -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h2>
+                        Proctoring Status
+                    </h2>
+
+                </div>
+
+
+                {% if exam.warning_count and exam.warning_count > 0 %}
+
+                    <div class="security-warning">
+
+                        <div class="security-status">
+
+                            <span class="analysis-dot weakness-dot"></span>
+
+                            <strong>
+                                {{ exam.warning_count }}
+                                warning{{ 's' if exam.warning_count != 1 else '' }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="security-clear">
+
+                        <div class="security-status">
+
+                            <span class="analysis-dot strength-dot"></span>
+
+                            <strong>
+                                No proctoring warnings
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+
+                {% if exam.submission_reason %}
+
+                <div class="security-summary">
+
+                    Submission:
+                    {{ exam.submission_reason|replace('_', ' ')|title }}
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- EXAM DETAILS -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h2>
+                        Assessment Details
+                    </h2>
+
+                </div>
+
+
+                <div class="details-list">
+
+                    <div class="detail-row">
+
+                        <span>
+                            Domain
+                        </span>
+
+                        <span>
+                            {{ domain_name }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="detail-row">
+
+                        <span>
+                            Difficulty
+                        </span>
+
+                        <span>
+                            {{ exam.difficulty|title }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="detail-row">
+
+                        <span>
+                            Questions
+                        </span>
+
+                        <span>
+                            {{ total }}
+                        </span>
+
+                    </div>
+
+
+                    {% if exam.duration_seconds %}
+
+                    <div class="detail-row">
+
+                        <span>
+                            Duration
+                        </span>
+
+                        <span>
+                            {{ (exam.duration_seconds // 60) }} min
+                        </span>
+
+                    </div>
+
+                    {% endif %}
+
+
+                    <div class="detail-row">
+
+                        <span>
+                            Status
+                        </span>
+
+                        <span>
+                            {{ exam.status|replace('_', ' ')|title }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             FINAL ACTIONS
+             ================================================= -->
+
+        <div class="results-actions">
+
+            <a href="{{ url_for('history') }}"
+               class="secondary-btn">
+
+                VIEW EXAM HISTORY →
+
+            </a>
+
+            <a href="{{ url_for('dashboard') }}"
+               class="primary-btn">
+
+                TAKE ANOTHER TEST →
+
+            </a>
+
+        </div>
+
+
+    </main>
+
+</div>
+
+</body>
+</html>

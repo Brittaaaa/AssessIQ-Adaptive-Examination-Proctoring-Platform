@@ -1,0 +1,148 @@
+/* ==========================================
+   AssessIQ AI Components
+========================================== */
+
+/* Buttons */
+
+.btn-ai{
+
+    background:var(--primary);
+
+    color:white;
+
+    border:none;
+
+    border-radius:14px;
+
+    padding:14px 26px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.btn-ai:hover{
+
+    background:var(--primary-hover);
+
+    transform:translateY(-2px);
+
+}
+
+
+/* Outline Button */
+
+.btn-outline-ai{
+
+    border:1px solid var(--border);
+
+    color:white;
+
+    background:transparent;
+
+    border-radius:14px;
+
+    padding:14px 26px;
+
+    transition:.3s;
+
+}
+
+.btn-outline-ai:hover{
+
+    background:var(--card);
+
+}
+
+
+/* Cards */
+
+.ai-card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:20px;
+
+    padding:24px;
+
+    transition:.3s;
+
+}
+
+.ai-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 20px 40px rgba(0,0,0,.25);
+
+}
+
+
+/* Inputs */
+
+.ai-input{
+
+    width:100%;
+
+    background:#172033;
+
+    border:1px solid var(--border);
+
+    color:white;
+
+    padding:15px;
+
+    border-radius:14px;
+
+    outline:none;
+
+    transition:.3s;
+
+}
+
+.ai-input:focus{
+
+    border-color:var(--primary);
+
+    box-shadow:0 0 0 4px rgba(59,130,246,.15);
+
+}
+
+
+/* Section */
+
+.page-title{
+
+    font-size:34px;
+
+    font-weight:700;
+
+}
+
+.page-subtitle{
+
+    color:var(--muted);
+
+}
+
+
+/* Badge */
+
+.ai-badge{
+
+    display:inline-block;
+
+    padding:8px 16px;
+
+    border-radius:30px;
+
+    background:rgba(59,130,246,.15);
+
+    color:#60A5FA;
+
+    font-size:14px;
+
+}

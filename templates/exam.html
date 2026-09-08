@@ -1,0 +1,1021 @@
+{% extends 'base.html' %}
+
+{% block title %}Assessment | AssessIQ AI{% endblock %}
+
+{% block css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/exam.css') }}">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="exam-page">
+
+    <!-- =====================================================
+         TOP BAR
+    ====================================================== -->
+
+    <header class="exam-topbar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                <i class="fa-solid fa-brain"></i>
+            </div>
+
+            <div>
+                <strong>AssessIQ AI</strong>
+                <span>AI-Powered Assessment</span>
+            </div>
+
+        </div>
+
+
+        <div class="exam-meta">
+
+            <div class="exam-domain">
+
+                <i class="fa-solid fa-layer-group"></i>
+
+                <div>
+                    <span>Assessment</span>
+
+                    <strong>
+                        {{ domain_name }}
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="timer-container">
+
+                <i class="fa-regular fa-clock"></i>
+
+                <div>
+
+                    <span>Time Remaining</span>
+
+                    <strong id="timer">
+                        --:--
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="exam-container">
+
+
+        <!-- =================================================
+             PROGRESS
+        ================================================== -->
+
+        <section class="exam-progress">
+
+            <div class="progress-info">
+
+                <span id="position">
+                    Question 1/{{ exam.questions|length }}
+                </span>
+
+                <span>
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    <span id="answeredCount">0</span>
+                    answered
+                </span>
+
+            </div>
+
+
+            <div class="progress-track">
+
+                <div
+                    id="progressBar"
+                    class="progress-fill"
+                    style="width:5%;"
+                ></div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             MAIN EXAM GRID
+        ================================================== -->
+
+        <section class="exam-grid">
+
+
+            <!-- =================================================
+                 LEFT SIDE
+                 
+                 QUESTION + PALETTE
+            ================================================== -->
+
+            <div class="exam-left">
+
+
+                <!-- =================================================
+                     QUESTION CARD
+                ================================================== -->
+
+                <article class="question-card">
+
+                    <div class="question-top">
+
+                        <span class="question-label">
+
+                            <i class="fa-solid fa-circle-question"></i>
+
+                            QUESTION
+
+                        </span>
+
+
+                        <span class="difficulty-badge">
+
+                            {{ exam.difficulty|title }}
+
+                        </span>
+
+                    </div>
+
+
+
+                    <div class="question-content">
+
+                        <p class="topic-label">
+                            TOPIC
+                        </p>
+
+                        <p
+                            id="topicText"
+                            class="topic-name"
+                        >
+                            General Concepts
+                        </p>
+
+
+                        <h1 id="questionText">
+                            Loading question...
+                        </h1>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         OPTIONS
+                    ================================================== -->
+
+                    <div
+                        id="options"
+                        class="options"
+                    ></div>
+
+
+
+                    <!-- =================================================
+                         ACTIONS
+                    ================================================== -->
+
+                    <div class="question-actions">
+
+                        <button
+                            id="previous"
+                            class="secondary-btn"
+                            type="button"
+                        >
+
+                            <i class="fa-solid fa-arrow-left"></i>
+
+                            Previous
+
+                        </button>
+
+
+                        <button
+                            id="next"
+                            class="primary-btn"
+                            type="button"
+                        >
+
+                            Next
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- =================================================
+                     QUESTION PALETTE
+
+                     DIRECTLY UNDER QUESTION CARD
+                ================================================== -->
+
+                <section class="sidebar-card navigation-card">
+
+                    <div class="navigation-heading">
+
+                        <div>
+
+                            <h3>Questions</h3>
+
+                            <span>
+                                Navigate assessment
+                            </span>
+
+                        </div>
+
+                        <i class="fa-solid fa-list-check"></i>
+
+                    </div>
+
+
+                    <div
+                        id="numbers"
+                        class="question-numbers"
+                    ></div>
+
+
+                    <div class="navigation-legend">
+
+                        <span>
+                            <i class="legend-current"></i>
+                            Current
+                        </span>
+
+                        <span>
+                            <i class="legend-answered"></i>
+                            Answered
+                        </span>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 RIGHT SIDE
+            ================================================== -->
+
+            <aside class="exam-sidebar">
+
+
+                <!-- =================================================
+                     LIVE AI PROCTORING
+                ================================================== -->
+
+                <section class="sidebar-card proctor-card">
+
+                    <div class="sidebar-heading">
+
+                        <div class="sidebar-icon">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+
+                        <div>
+
+                            <h3>Live Proctoring</h3>
+
+                            <span class="proctor-active">
+                                <span></span>
+                                Monitoring Active
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- LIVE CAMERA -->
+
+                    <div class="proctor-camera">
+
+                        <img
+                            src="{{ url_for('video_feed') }}"
+                            alt="Live AI proctoring camera"
+                        >
+
+                        <div class="camera-live">
+
+                            <span></span>
+
+                            LIVE
+
+                        </div>
+
+                    </div>
+
+
+                    <p class="proctor-message">
+                        AI monitoring is active during the assessment.
+                    </p>
+
+
+
+                    <!-- SECURITY CHECKS -->
+
+                    <div class="security-title">
+
+                        <span>
+                            Security Checks
+                        </span>
+
+                        <strong>
+                            Protected
+                        </strong>
+
+                    </div>
+
+
+                    <div
+                        id="proctorStatus"
+                        class="proctor-status"
+                    ></div>
+
+
+
+                    <!-- WARNINGS -->
+
+                    <div class="warning-box">
+
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+
+                        <div>
+
+                            <span>
+                                Security Warnings
+                            </span>
+
+                            <strong id="warnings">
+                                {{ exam.warnings }}/3
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     SUBMIT
+                ================================================== -->
+
+                <button
+                    id="submit"
+                    class="submit-btn"
+                    type="button"
+                >
+
+                    <i class="fa-solid fa-paper-plane"></i>
+
+                    Submit Assessment
+
+                </button>
+
+
+                <p class="submit-note">
+                    Review your answers before submitting.
+                </p>
+
+
+
+                <!-- =================================================
+                     WARNING TOAST
+                ================================================== -->
+
+                <div
+                    id="warningToast"
+                    class="warning-toast"
+                    hidden
+                ></div>
+
+            </aside>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+
+{% endblock %}
+
+
+
+{% block js %}
+
+<script id="exam-data" type="application/json">
+    {{ exam|tojson }}
+</script>
+
+<script>
+
+const exam = JSON.parse(
+    document.getElementById("exam-data").textContent
+);
+
+const answers = {
+    ...exam.answers
+};
+
+const qs = exam.questions;
+
+let current = 0;
+
+let submitting = false;
+
+
+
+/* =========================================================
+   TIMER
+========================================================= */
+
+const fmt = seconds => {
+
+    return `${String(
+        Math.floor(seconds / 60)
+    ).padStart(2, "0")}:${String(
+        seconds % 60
+    ).padStart(2, "0")}`;
+
+};
+
+
+let remaining = exam.remaining;
+
+
+document.getElementById("timer").textContent =
+    fmt(remaining);
+
+
+const tick = setInterval(() => {
+
+    remaining--;
+
+
+    if (remaining <= 0) {
+
+        clearInterval(tick);
+
+        submit("TIMER_EXPIRED");
+
+    }
+
+
+    document.getElementById("timer").textContent =
+        fmt(Math.max(0, remaining));
+
+
+    if (remaining < 60) {
+
+        document
+            .getElementById("timer")
+            .classList.add("low");
+
+    }
+
+}, 1000);
+
+
+
+/* =========================================================
+   RENDER QUESTION
+========================================================= */
+
+function render() {
+
+    const q = qs[current];
+
+
+    document.getElementById("position").textContent =
+        `Question ${current + 1}/${qs.length}`;
+
+
+    document.getElementById("questionText").textContent =
+        q.question;
+
+
+    document.getElementById("topicText").textContent =
+        q.topic || "General Concepts";
+
+
+    document.getElementById("options").innerHTML =
+
+        Object.entries(q.options)
+
+        .map(([key, value]) => `
+
+            <label
+                class="option-card
+                ${answers[current] === key ? "selected" : ""}"
+            >
+
+                <input
+                    type="radio"
+                    name="answer"
+                    value="${key}"
+                    ${answers[current] === key ? "checked" : ""}
+                >
+
+                <span class="option-letter">
+                    ${key}
+                </span>
+
+                <span class="option-text">
+                    ${value}
+                </span>
+
+                <span class="option-check">
+                    <i class="fa-solid fa-check"></i>
+                </span>
+
+            </label>
+
+        `)
+
+        .join("");
+
+
+    document
+        .querySelectorAll('input[name="answer"]')
+        .forEach(input => {
+
+            input.onchange = () =>
+                save(input.value);
+
+        });
+
+
+    renderNavigation();
+
+    updateProgress();
+
+
+    /* Disable previous on first question */
+
+    document.getElementById("previous").disabled =
+        current === 0;
+
+
+    /* Disable next on last question */
+
+    document.getElementById("next").disabled =
+        current === qs.length - 1;
+
+}
+
+
+
+/* =========================================================
+   QUESTION NAVIGATION
+========================================================= */
+
+function renderNavigation() {
+
+    document.getElementById("numbers").innerHTML =
+
+        qs.map((_, index) => `
+
+            <button
+                class="
+                    question-number
+                    ${index === current ? "active" : ""}
+                    ${answers[index] ? "answered" : ""}
+                "
+                onclick="go(${index})"
+                type="button"
+            >
+                ${index + 1}
+            </button>
+
+        `)
+
+        .join("");
+
+}
+
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+function updateProgress() {
+
+    const answered =
+        Object.keys(answers).length;
+
+
+    document.getElementById("answeredCount")
+        .textContent = answered;
+
+
+    const percentage =
+        ((current + 1) / qs.length) * 100;
+
+
+    document.getElementById("progressBar")
+        .style.width =
+        `${percentage}%`;
+
+}
+
+
+
+/* =========================================================
+   GO TO QUESTION
+========================================================= */
+
+function go(index) {
+
+    if (
+        index < 0 ||
+        index >= qs.length
+    ) {
+        return;
+    }
+
+
+    current = index;
+
+    render();
+
+}
+
+
+
+/* =========================================================
+   SAVE ANSWER
+========================================================= */
+
+async function save(answer) {
+
+    answers[current] = answer;
+
+
+    try {
+
+        await fetch(
+            `/api/exam/${exam.id}/answer`,
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body: JSON.stringify({
+                    question_index: current,
+                    answer: answer
+                })
+            }
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Answer save error:",
+            error
+        );
+
+    }
+
+
+    render();
+
+}
+
+
+
+/* =========================================================
+   PREVIOUS / NEXT
+========================================================= */
+
+document.getElementById("previous")
+    .onclick = () => {
+
+        go(current - 1);
+
+    };
+
+
+document.getElementById("next")
+    .onclick = () => {
+
+        go(current + 1);
+
+    };
+
+
+
+/* =========================================================
+   SUBMIT
+========================================================= */
+
+document.getElementById("submit").onclick = () => {
+
+    const confirmed = document.createElement("div");
+
+    confirmed.className = "submit-confirm";
+
+    confirmed.innerHTML = `
+        <div class="submit-confirm-box">
+
+            <div class="submit-confirm-icon">
+                <i class="fa-solid fa-circle-question"></i>
+            </div>
+
+            <h3>Are you sure?</h3>
+
+            <p>
+                Do you want to submit this assessment?
+            </p>
+
+            <div class="submit-confirm-actions">
+
+                <button
+                    type="button"
+                    class="cancel-submit"
+                    id="cancelSubmit"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="confirm-submit"
+                    id="confirmSubmit"
+                >
+                    Submit
+                </button>
+
+            </div>
+
+        </div>
+    `;
+
+    document.body.appendChild(confirmed);
+
+    document.getElementById("cancelSubmit").onclick = () => {
+        confirmed.remove();
+    };
+
+    document.getElementById("confirmSubmit").onclick = () => {
+        confirmed.remove();
+        submit("MANUAL");
+    };
+
+};
+
+async function submit(reason) {
+
+    if (submitting)
+        return;
+
+
+    submitting = true;
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/exam/${exam.id}/submit`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        reason: reason
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (data.results_url) {
+
+            location =
+                data.results_url;
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Submit error:",
+            error
+        );
+
+        submitting = false;
+
+    }
+
+}
+
+
+
+/* =========================================================
+   AI PROCTORING
+========================================================= */
+
+async function proctor() {
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/exam/${exam.id}/proctor`,
+                {
+                    cache: "no-store"
+                }
+            );
+
+
+        if (!response.ok)
+            return;
+
+
+        const data =
+            await response.json();
+
+
+        document.getElementById("warnings")
+            .textContent =
+            `${data.warnings}/3`;
+
+
+        document.getElementById("proctorStatus")
+            .innerHTML = [
+
+                ["Camera", data.camera],
+
+                ["Face", data.face],
+
+                [
+                    "Single Person",
+                    data.person &&
+                    data.person_count === 1
+                ],
+
+                ["No Phone", !data.phone],
+
+                ["No Book", !data.book],
+
+                ["Eye Focus", data.eye]
+
+            ]
+
+            .map(item => `
+
+                <div class="${item[1] ? "good" : "bad"}">
+
+                    <span>●</span>
+
+                    ${item[0]}
+
+                </div>
+
+            `)
+
+            .join("");
+
+
+        if (data.warning) {
+
+            const toast =
+                document.getElementById(
+                    "warningToast"
+                );
+
+
+            toast.textContent =
+                `AI PROCTORING WARNING ${data.warning.count}/3 — ${data.warning.message}`;
+
+
+            toast.hidden = false;
+
+
+            setTimeout(
+                () => {
+                    toast.hidden = true;
+                },
+                6000
+            );
+
+        }
+
+
+        if (data.auto_submitted) {
+
+            submit("MAX_WARNINGS");
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Proctoring error:",
+            error
+        );
+
+    }
+
+}
+
+
+setInterval(
+    proctor,
+    1500
+);
+
+
+
+/* =========================================================
+   TAB SWITCH DETECTION
+========================================================= */
+
+document.addEventListener(
+    "visibilitychange",
+    () => {
+
+        if (document.hidden) {
+
+            submit("TAB_SWITCH");
+
+        }
+
+    }
+);
+
+
+window.addEventListener(
+    "blur",
+    () => {
+
+        setTimeout(
+            () => {
+
+                if (document.hidden) {
+
+                    submit("TAB_SWITCH");
+
+                }
+
+            },
+            100
+        );
+
+    }
+);
+
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+render();
+
+proctor();
+
+</script>
+
+{% endblock %}

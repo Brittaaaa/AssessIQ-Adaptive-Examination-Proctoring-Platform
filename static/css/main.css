@@ -1,0 +1,103 @@
+/* ============================
+   AssessIQ AI Design System
+============================= */
+
+:root{
+
+    --bg:#0F172A;
+
+    --sidebar:#111827;
+
+    --card:#1E293B;
+
+    --primary:#3B82F6;
+
+    --primary-hover:#2563EB;
+
+    --success:#22C55E;
+
+    --danger:#EF4444;
+
+    --warning:#F59E0B;
+
+    --purple:#8B5CF6;
+
+    --text:#F8FAFC;
+
+    --muted:#94A3B8;
+
+    --border:#334155;
+
+    --radius:18px;
+
+    --transition:.3s;
+
+}
+
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+}
+
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    background:var(--bg);
+
+    color:var(--text);
+
+}
+
+
+a{
+
+    text-decoration:none;
+
+    color:inherit;
+
+}
+
+
+img{
+
+    max-width:100%;
+
+}
+
+
+button{
+
+    cursor:pointer;
+
+}
+
+
+.section-title{
+
+    font-size:32px;
+
+    font-weight:700;
+
+}
+
+
+.subtitle{
+
+    color:var(--muted);
+
+}

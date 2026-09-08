@@ -1,0 +1,702 @@
+/* =========================================================
+   ASSESSIQ AI
+   DOMAINS PAGE
+   Professional Navy / Blue Theme
+   ========================================================= */
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+body {
+    font-family:
+        Inter,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background: #09111F;
+    color: #F8FAFC;
+}
+
+
+.domains-page {
+    width: 100%;
+    min-height: 100vh;
+
+    padding: 48px 55px 70px;
+
+    background: #09111F;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.domains-header {
+    width: 100%;
+    max-width: 1350px;
+
+    margin: 0 auto 42px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 35px;
+}
+
+
+.page-label {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: #3B82F6;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    letter-spacing: 1.6px;
+}
+
+
+.domains-header h1 {
+    margin-bottom: 10px;
+
+    color: #F8FAFC;
+
+    font-size: 38px;
+    line-height: 1.2;
+
+    font-weight: 700;
+
+    letter-spacing: -0.5px;
+}
+
+
+.domains-header p {
+    color: #94A3B8;
+
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   DASHBOARD BUTTON
+   ========================================================= */
+
+.back-dashboard {
+    flex-shrink: 0;
+
+    min-height: 48px;
+
+    padding: 0 21px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    border: 1px solid #26344A;
+    border-radius: 10px;
+
+    background: #111827;
+
+    color: #CBD5E1;
+
+    text-decoration: none;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.back-dashboard:hover {
+    background: #17233A;
+
+    border-color: #3B82F6;
+
+    color: #FFFFFF;
+
+    transform: translateY(-2px);
+}
+
+
+.back-dashboard i {
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   DOMAIN GRID
+   ========================================================= */
+
+.domain-grid {
+    width: 100%;
+    max-width: 1350px;
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 25px;
+}
+
+
+/* =========================================================
+   DOMAIN CARD
+   ========================================================= */
+
+.domain-card {
+    min-height: 360px;
+
+    padding: 32px;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #111827;
+
+    border: 1px solid #202C3D;
+    border-radius: 16px;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.16);
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.domain-card:hover {
+    transform: translateY(-5px);
+
+    background: #131E30;
+
+    border-color: #2D405B;
+
+    box-shadow:
+        0 16px 40px rgba(0, 0, 0, 0.24);
+}
+
+
+/* =========================================================
+   CARD TOP
+   ========================================================= */
+
+.domain-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 30px;
+}
+
+
+/* =========================================================
+   DOMAIN ICON
+   ========================================================= */
+
+.domain-icon {
+    width: 62px;
+    height: 62px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: #17233A;
+
+    color: #3B82F6;
+
+    font-size: 25px;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.domain-card:hover .domain-icon {
+    background: #1D4ED8;
+
+    color: #FFFFFF;
+
+    transform: scale(1.04);
+}
+
+
+/* =========================================================
+   TOP RIGHT ARROW
+   ========================================================= */
+
+.domain-arrow {
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #26344A;
+    border-radius: 9px;
+
+    background: #0F172A;
+
+    color: #475569;
+
+    font-size: 13px;
+
+    transition:
+        color 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.domain-card:hover .domain-arrow {
+    color: #60A5FA;
+
+    border-color: #2D405B;
+
+    background: #17233A;
+
+    transform: translate(2px, -2px);
+}
+
+
+/* =========================================================
+   DOMAIN CONTENT
+   ========================================================= */
+
+.domain-content {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+.domain-content h2 {
+    margin-bottom: 13px;
+
+    color: #F1F5F9;
+
+    font-size: 24px;
+    line-height: 1.35;
+
+    font-weight: 700;
+
+    letter-spacing: -0.25px;
+}
+
+
+.domain-content p {
+    max-width: 430px;
+
+    color: #94A3B8;
+
+    font-size: 16px;
+    line-height: 1.75;
+
+    font-weight: 400;
+}
+
+
+/* =========================================================
+   DOMAIN ACTION BUTTON
+   ========================================================= */
+
+.domain-action {
+    width: 100%;
+
+    min-height: 52px;
+
+    margin-top: 27px;
+
+    padding: 0 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border: 1px solid #263D61;
+    border-radius: 10px;
+
+    background: #17233A;
+
+    color: #60A5FA;
+
+    text-decoration: none;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.domain-action:hover {
+    background: #1D4ED8;
+
+    border-color: #3B82F6;
+
+    color: #FFFFFF;
+
+    transform: translateY(-1px);
+}
+
+
+.domain-action i {
+    font-size: 13px;
+
+    transition:
+        transform 0.2s ease;
+}
+
+
+.domain-action:hover i {
+    transform: translateX(5px);
+}
+
+
+/* =========================================================
+   SECOND ROW
+   Keeps the two remaining cards balanced
+   ========================================================= */
+
+.domain-card:nth-child(4),
+.domain-card:nth-child(5) {
+    min-height: 360px;
+}
+
+
+/* =========================================================
+   LARGE DESKTOP
+   ========================================================= */
+
+@media (min-width: 1400px) {
+
+    .domains-page {
+        padding-left: 70px;
+        padding-right: 70px;
+    }
+
+
+    .domains-header,
+    .domain-grid {
+        max-width: 1400px;
+    }
+
+
+    .domain-card {
+        min-height: 375px;
+
+        padding: 35px;
+    }
+
+
+    .domain-content h2 {
+        font-size: 25px;
+    }
+
+
+    .domain-content p {
+        font-size: 16px;
+    }
+
+}
+
+
+/* =========================================================
+   TABLET / SMALL LAPTOP
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .domains-page {
+        padding: 40px 35px 55px;
+    }
+
+
+    .domains-header,
+    .domain-grid {
+        max-width: 100%;
+    }
+
+
+    .domain-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 20px;
+    }
+
+
+    .domain-card {
+        min-height: 340px;
+    }
+
+
+    .domain-card:nth-child(4),
+    .domain-card:nth-child(5) {
+        min-height: 340px;
+    }
+
+}
+
+
+/* =========================================================
+   TABLET PORTRAIT
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .domains-page {
+        padding: 35px 25px 50px;
+    }
+
+
+    .domains-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        margin-bottom: 32px;
+    }
+
+
+    .domains-header h1 {
+        font-size: 34px;
+    }
+
+
+    .domains-header p {
+        font-size: 16px;
+    }
+
+
+    .back-dashboard {
+        min-height: 46px;
+    }
+
+
+    .domain-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .domain-card {
+        min-height: 320px;
+    }
+
+
+    .domain-card:nth-child(4),
+    .domain-card:nth-child(5) {
+        min-height: 320px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .domains-page {
+        padding: 30px 18px 45px;
+    }
+
+
+    .page-label {
+        font-size: 11px;
+    }
+
+
+    .domains-header h1 {
+        font-size: 29px;
+
+        letter-spacing: -0.3px;
+    }
+
+
+    .domains-header p {
+        font-size: 14px;
+
+        line-height: 1.6;
+    }
+
+
+    .back-dashboard {
+        width: 100%;
+
+        min-height: 46px;
+    }
+
+
+    .domain-grid {
+        gap: 16px;
+    }
+
+
+    .domain-card {
+        min-height: 310px;
+
+        padding: 25px;
+    }
+
+
+    .domain-card:nth-child(4),
+    .domain-card:nth-child(5) {
+        min-height: 310px;
+    }
+
+
+    .domain-card-top {
+        margin-bottom: 25px;
+    }
+
+
+    .domain-icon {
+        width: 58px;
+        height: 58px;
+
+        border-radius: 13px;
+
+        font-size: 23px;
+    }
+
+
+    .domain-arrow {
+        width: 38px;
+        height: 38px;
+    }
+
+
+    .domain-content h2 {
+        font-size: 21px;
+
+        margin-bottom: 11px;
+    }
+
+
+    .domain-content p {
+        font-size: 14px;
+
+        line-height: 1.7;
+    }
+
+
+    .domain-action {
+        min-height: 50px;
+
+        margin-top: 24px;
+
+        font-size: 14px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+    .domains-page {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+
+    .domains-header h1 {
+        font-size: 26px;
+    }
+
+
+    .domains-header p {
+        font-size: 13px;
+    }
+
+
+    .domain-card {
+        min-height: 300px;
+
+        padding: 22px;
+    }
+
+
+    .domain-card:nth-child(4),
+    .domain-card:nth-child(5) {
+        min-height: 300px;
+    }
+
+
+    .domain-icon {
+        width: 54px;
+        height: 54px;
+
+        font-size: 21px;
+    }
+
+
+    .domain-content h2 {
+        font-size: 19px;
+    }
+
+
+    .domain-content p {
+        font-size: 13px;
+    }
+
+
+    .domain-action {
+        min-height: 48px;
+
+        font-size: 13px;
+    }
+
+}

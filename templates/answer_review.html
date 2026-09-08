@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AssessIQ AI — Answer Review</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/answer_review.css') }}">
+
+</head>
+
+
+<body>
+
+<div class="review-page">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="review-header">
+
+        <div class="brand">
+
+            <div class="brand-mark">
+                A
+            </div>
+
+            <div class="brand-text">
+
+                <h1>
+                    AssessIQ <span>AI</span>
+                </h1>
+
+                <p>
+                    Answer Review
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <a href="{{ url_for('results', exam_id=report.exam.id) }}"
+           class="back-btn">
+
+            ← Back to Results
+
+        </a>
+
+    </header>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="review-container">
+
+
+        <!-- ================= PAGE INTRO ================= -->
+
+        <section class="review-intro">
+
+            <div>
+
+                <span class="eyebrow">
+                    ANSWER REVIEW
+                </span>
+
+                <h1>
+                    Question-by-Question Analysis
+                </h1>
+
+                <p>
+                    Review your actual responses against the correct
+                    answers from this assessment.
+                </p>
+
+            </div>
+
+
+            <div class="question-count">
+
+                <strong>
+                    {{ report.question_review|length }}
+                </strong>
+
+                <span>
+                    Questions
+                </span>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= QUESTIONS ================= -->
+
+        <section class="review-list">
+
+            {% for item in report.question_review %}
+
+            <article class="question-card
+                {% if item.is_correct == true %}
+                    correct-card
+                {% elif item.is_correct == false %}
+                    wrong-card
+                {% else %}
+                    unanswered-card
+                {% endif %}
+            ">
+
+
+                <!-- QUESTION HEADER -->
+
+                <div class="question-header">
+
+                    <div class="question-number">
+                        {{ item.number }}
+                    </div>
+
+
+                    <div class="question-heading">
+
+                        <span class="question-topic">
+                            {{ item.topic }}
+                        </span>
+
+
+                        {% if item.is_correct == true %}
+
+                            <span class="status correct-status">
+                                ✓ Correct
+                            </span>
+
+                        {% elif item.is_correct == false %}
+
+                            <span class="status wrong-status">
+                                × Incorrect
+                            </span>
+
+                        {% else %}
+
+                            <span class="status unanswered-status">
+                                — Unanswered
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- QUESTION -->
+
+                <div class="question-body">
+
+                    <h3>
+                        {{ item.question }}
+                    </h3>
+
+
+                    <!-- OPTIONS -->
+
+                    <div class="options">
+
+                        {% for key, value in item.options.items() %}
+
+                        <div class="option
+
+                            {% if key == item.correct_answer %}
+                                correct-option
+                            {% endif %}
+
+                            {% if key == item.selected_answer
+                                  and key != item.correct_answer %}
+                                wrong-option
+                            {% endif %}
+
+                            {% if key == item.selected_answer
+                                  and key == item.correct_answer %}
+                                selected-correct-option
+                            {% endif %}
+
+                        ">
+
+                            <span class="option-letter">
+                                {{ key }}
+                            </span>
+
+
+                            <span class="option-text">
+                                {{ value }}
+                            </span>
+
+
+                            {% if key == item.correct_answer %}
+
+                                <span class="option-label correct-label">
+                                    Correct Answer
+                                </span>
+
+                            {% elif key == item.selected_answer %}
+
+                                <span class="option-label wrong-label">
+                                    Your Answer
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+
+                    <!-- ANSWER SUMMARY -->
+
+                    <div class="answer-summary">
+
+
+                        <div class="answer-box">
+
+                            <span>
+                                Your Answer
+                            </span>
+
+                            <strong>
+
+                                {% if item.selected_answer %}
+
+                                    {{ item.selected_answer }}
+
+                                {% else %}
+
+                                    Not Answered
+
+                                {% endif %}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="answer-box">
+
+                            <span>
+                                Correct Answer
+                            </span>
+
+                            <strong>
+                                {{ item.correct_answer }}
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </article>
+
+            {% endfor %}
+
+
+            {% if not report.question_review %}
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        —
+                    </div>
+
+                    <h3>
+                        No Answer Data Available
+                    </h3>
+
+                    <p>
+                        Question-level answer data could not be found
+                        for this assessment.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+
+
+        <!-- ================= BOTTOM ================= -->
+
+        <section class="bottom-actions">
+
+            <a href="{{ url_for('results', exam_id=report.exam.id) }}"
+               class="secondary-btn">
+
+                ← Back to Results
+
+            </a>
+
+
+            <a href="{{ url_for('history') }}"
+               class="primary-btn">
+
+                View Exam History →
+
+            </a>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+</body>
+</html>

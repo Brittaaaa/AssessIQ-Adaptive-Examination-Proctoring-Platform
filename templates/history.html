@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AssessIQ AI — Exam History</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/history.css') }}">
+</head>
+
+<body>
+
+<div class="history-page">
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="history-header">
+
+        <div class="brand">
+
+            <div class="brand-mark">
+                A
+            </div>
+
+            <div class="brand-text">
+                <h1>
+                    AssessIQ <span>AI</span>
+                </h1>
+
+                <p>
+                    Examination History
+                </p>
+            </div>
+
+        </div>
+
+        <a href="{{ url_for('dashboard') }}"
+           class="dashboard-btn">
+
+            ← Dashboard
+
+        </a>
+
+    </header>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="history-container">
+
+
+        <!-- ================= INTRO ================= -->
+
+        <section class="history-intro">
+
+            <div class="intro-content">
+
+                <span class="eyebrow">
+                    ASSESSMENT HISTORY
+                </span>
+
+                <h2>
+                    Your Examination History
+                </h2>
+
+                <p>
+                    View your previous assessments, scores,
+                    knowledge levels and examination performance.
+                </p>
+
+            </div>
+
+
+            <div class="history-count">
+
+                <strong>
+                    {{ exams|length }}
+                </strong>
+
+                <span>
+                    Total Assessments
+                </span>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= HISTORY LIST ================= -->
+
+        <section class="history-section">
+
+            {% if exams %}
+
+                <div class="section-heading">
+
+                    <div>
+                        <span class="section-label">
+                            ALL ASSESSMENTS
+                        </span>
+
+                        <h2>
+                            Examination Records
+                        </h2>
+                    </div>
+
+                </div>
+
+
+                <div class="exam-list">
+
+                    {% for exam in exams %}
+
+                    <article class="exam-card">
+
+                        <!-- TOP ROW -->
+
+                        <div class="exam-top">
+
+                            <div class="exam-identity">
+
+                                <div class="exam-number">
+                                    #{{ exam.id }}
+                                </div>
+
+                                <div class="exam-title">
+
+                                    <h3>
+                                        {{ exam.domain|replace('_', ' ')|title }}
+                                    </h3>
+
+                                    <span>
+                                        {{ exam.difficulty|title }}
+                                        Assessment
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="exam-status">
+
+                                {% if exam.status == 'SUBMITTED' %}
+
+                                    <span class="status-badge submitted">
+                                        ✓ Submitted
+                                    </span>
+
+                                {% elif exam.status == 'AUTO_SUBMITTED' %}
+
+                                    <span class="status-badge auto-submitted">
+                                        ⚠ Auto Submitted
+                                    </span>
+
+                                {% elif exam.status == 'IN_PROGRESS' %}
+
+                                    <span class="status-badge progress">
+                                        In Progress
+                                    </span>
+
+                                {% elif exam.status == 'VERIFIED' %}
+
+                                    <span class="status-badge verified">
+                                        Verified
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="status-badge created">
+                                        Created
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- SCORE AREA -->
+
+                        <div class="exam-main">
+
+                            <div class="score-display">
+
+                                {% if exam.score is not none %}
+
+                                    <strong>
+                                        {{ "%.1f"|format(exam.score) }}%
+                                    </strong>
+
+                                    <span>
+                                        Score
+                                    </span>
+
+                                {% else %}
+
+                                    <strong>
+                                        —
+                                    </strong>
+
+                                    <span>
+                                        Not Evaluated
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="exam-details">
+
+                                <div class="detail-item">
+
+                                    <span>
+                                        Knowledge Level
+                                    </span>
+
+                                    <strong>
+                                        {{ exam.knowledge_level or "—" }}
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="detail-item">
+
+                                    <span>
+                                        Correct
+                                    </span>
+
+                                    <strong>
+                                        {{ exam.correct_count or 0 }}
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="detail-item">
+
+                                    <span>
+                                        Incorrect
+                                    </span>
+
+                                    <strong>
+                                        {{ exam.incorrect_count or 0 }}
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="detail-item">
+
+                                    <span>
+                                        Unanswered
+                                    </span>
+
+                                    <strong>
+                                        {{ exam.unanswered_count or 0 }}
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="detail-item">
+
+                                    <span>
+                                        Duration
+                                    </span>
+
+                                    <strong>
+
+                                        {% if exam.duration_seconds %}
+
+                                            {{ exam.duration_seconds // 60 }} min
+
+                                        {% else %}
+
+                                            —
+
+                                        {% endif %}
+
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="detail-item">
+
+                                    <span>
+                                        Warnings
+                                    </span>
+
+                                    <strong>
+
+                                        {{ exam.warning_count or 0 }}
+
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- FOOTER -->
+
+                        <div class="exam-footer">
+
+                            <div class="exam-date">
+
+                                <span>
+                                    Assessment Date
+                                </span>
+
+                                <strong>
+                                    {{ exam.created_at }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="exam-actions">
+
+                                {% if exam.status in ['SUBMITTED', 'AUTO_SUBMITTED'] %}
+
+                                    <a href="{{ url_for('results', exam_id=exam.id) }}"
+                                       class="view-results-btn">
+
+                                        View Results
+
+                                        <span>→</span>
+
+                                    </a>
+
+                                {% else %}
+
+                                    <span class="not-available">
+                                        Results unavailable
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+
+                <!-- ================= EMPTY STATE ================= -->
+
+                <div class="empty-history">
+
+                    <div class="empty-icon">
+                        —
+                    </div>
+
+                    <span class="section-label">
+                        NO ASSESSMENTS
+                    </span>
+
+                    <h2>
+                        No Examination History Yet
+                    </h2>
+
+                    <p>
+                        Your completed assessments will appear
+                        here once you take your first examination.
+                    </p>
+
+                    <a href="{{ url_for('dashboard') }}"
+                       class="empty-action">
+
+                        Go to Dashboard
+
+                        <span>→</span>
+
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+
+
+        <!-- ================= BOTTOM ACTIONS ================= -->
+
+        <section class="history-actions">
+
+            <a href="{{ url_for('dashboard') }}"
+               class="secondary-btn">
+
+                ← Back to Dashboard
+
+            </a>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,244 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Dashboard | AssessIQ AI{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="dashboard">
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+        <!-- Logo -->
+        <div class="logo">
+            <i class="fa-solid fa-brain"></i>
+            AssessIQ AI
+        </div>
+
+
+        <!-- Navigation -->
+        <nav>
+
+            <a class="active" href="/dashboard">
+                <i class="fa-solid fa-house"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="/domains">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>Domains</span>
+            </a>
+
+            <a href="/history">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Reports</span>
+            </a>
+
+            <a href="/analytics">
+                <i class="fa-solid fa-brain"></i>
+                <span>AI Insights</span>
+            </a>
+
+            <a href="/profile">
+                <i class="fa-solid fa-user"></i>
+                <span>Profile</span>
+            </a>
+
+            <a href="/logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+
+        </nav>
+
+
+        <!-- =================================================
+             SIDEBAR PROFILE
+             ================================================= -->
+
+        <div class="sidebar-profile">
+
+            <div class="sidebar-profile-avatar">
+                {{ username[0]|upper }}
+            </div>
+
+            <div class="sidebar-profile-info">
+                <strong>{{ username }}</strong>
+                <span>Student</span>
+            </div>
+
+            <a href="/profile" class="sidebar-profile-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             TOP BAR
+             ================================================= -->
+
+        <div class="topbar">
+
+            <div>
+                <h1>Welcome back, {{ username }}</h1>
+
+                <p>
+                    Adaptive Intelligence Assessment Platform
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             STATISTICS
+             ================================================= -->
+
+        <div class="stats">
+
+            <div class="stat-card">
+                <h3>{{ stats.tests }}</h3>
+                <span>Tests Taken</span>
+            </div>
+
+            <div class="stat-card">
+                <h3>{{ stats.average }}%</h3>
+                <span>Average Accuracy</span>
+            </div>
+
+            <div class="stat-card">
+                <h3>{{ stats.best }}%</h3>
+                <span>Best Score</span>
+            </div>
+
+            <div class="stat-card">
+                <h3>{{ stats.level }}</h3>
+                <span>Current Knowledge Level</span>
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ASSESSMENT DOMAINS
+             ================================================= -->
+
+        <h2 class="section-title">
+            Choose Assessment Domain
+        </h2>
+
+
+        <div class="domains">
+
+            {% for slug,name,icon in [
+                ('aiml','AI & Machine Learning','brain'),
+                ('data_analytics','Data Analytics','chart-column'),
+                ('fullstack','Full Stack','code'),
+                ('devops','DevOps','server'),
+                ('aptitude','Aptitude','calculator')
+            ] %}
+
+            <div class="domain-card">
+
+                <!-- Domain Icon -->
+                <i class="fa-solid fa-{{ icon }}"></i>
+
+
+                <!-- Domain Name -->
+                <h3>
+                    {{ name }}
+                </h3>
+
+
+                <!-- Description -->
+                <p>
+                    AI-curated question bank
+                </p>
+
+
+                <!-- Start Assessment -->
+                <a
+                    href="/difficulty/{{ slug }}"
+                    class="start-btn"
+                >
+                    <span>Start Assessment</span>
+
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- =================================================
+             RECENT ASSESSMENTS
+             ================================================= -->
+
+        <h2 class="section-title">
+            Recent Assessments
+        </h2>
+
+
+        <div class="recent-table">
+
+            {% if recent %}
+
+                {% for e in recent %}
+
+                <a href="/results/{{ e.id }}">
+
+                    <span>
+                        {{ e.domain.replace('_',' ')|title }}
+                        ·
+                        {{ e.difficulty|title }}
+                    </span>
+
+                    <strong>
+                        {% if e.score is not none %}
+                            {{ e.score|round|int }}%
+                        {% else %}
+                            In progress
+                        {% endif %}
+                    </strong>
+
+                </a>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p>
+                    No completed assessments yet.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </main>
+
+</div>
+
+{% endblock %}
+

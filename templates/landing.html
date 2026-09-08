@@ -1,0 +1,695 @@
+{% extends "base.html" %}
+
+{% block title %}AssessIQ AI{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<!-- =========================================================
+     NAVBAR
+     ========================================================= -->
+
+<nav class="navbar navbar-expand-lg custom-navbar">
+
+    <div class="container">
+
+        <a class="navbar-brand logo" href="/">
+            <i class="fa-solid fa-brain"></i>
+            AssessIQ AI
+        </a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <ul class="navbar-nav ms-auto align-items-center">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#features">
+                        Features
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#domains">
+                        Domains
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">
+                        About
+                    </a>
+                </li>
+
+                <li class="nav-item ms-3">
+
+                    <a
+                        href="/login"
+                        class="btn-primary-custom"
+                    >
+                        Login
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================================================
+     HERO
+     ========================================================= -->
+
+<section class="hero">
+
+    <div class="container">
+
+        <div class="row align-items-center">
+
+            <!-- LEFT SIDE -->
+
+            <div class="col-lg-6">
+
+                <span class="hero-badge">
+                    AI Powered Assessment Platform
+                </span>
+
+                <h1>
+
+                    Evaluate Skills
+
+                    <span>
+                        with Intelligent AI
+                    </span>
+
+                </h1>
+
+                <p>
+
+                    AssessIQ AI combines Adaptive Testing,
+                    AI Proctoring,
+                    Performance Analytics,
+                    and Smart Recommendations
+                    to create an industry-ready
+                    examination platform.
+
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a
+                        href="/login"
+                        class="btn-primary-custom"
+                    >
+                        Get Started
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT SIDE AI VISUAL -->
+
+            <div class="col-lg-6">
+
+                <div class="hero-right">
+
+                    <div class="ai-visual">
+
+                        <!-- Background glow -->
+
+                        <div class="ai-glow"></div>
+
+
+                        <!-- Large decorative rings -->
+
+                        <div class="ai-ring ring-one"></div>
+
+                        <div class="ai-ring ring-two"></div>
+
+
+                        <!-- Neural network connections -->
+
+                        <div class="connection connection-one"></div>
+
+                        <div class="connection connection-two"></div>
+
+                        <div class="connection connection-three"></div>
+
+                        <div class="connection connection-four"></div>
+
+
+                        <!-- Network nodes -->
+
+                        <span class="network-dot dot-one"></span>
+
+                        <span class="network-dot dot-two"></span>
+
+                        <span class="network-dot dot-three"></span>
+
+                        <span class="network-dot dot-four"></span>
+
+                        <span class="network-dot dot-five"></span>
+
+                        <span class="network-dot dot-six"></span>
+
+
+                        <!-- Main brain -->
+
+                        <div class="brain-box float">
+
+                            <div class="brain-inner-glow"></div>
+
+                            <i class="fa-solid fa-brain"></i>
+
+                        </div>
+
+
+                        <!-- Small information labels -->
+
+                        <div class="ai-label label-one">
+
+                            <i class="fa-solid fa-circle"></i>
+
+                            AI ANALYSIS
+
+                        </div>
+
+
+                        <div class="ai-label label-two">
+
+                            <i class="fa-solid fa-circle"></i>
+
+                            ADAPTIVE
+
+                        </div>
+
+
+                        <div class="ai-label label-three">
+
+                            <i class="fa-solid fa-circle"></i>
+
+                            PROCTORING
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FEATURES
+     ========================================================= -->
+
+<section
+    id="features"
+    class="landing-section features-section"
+>
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span>
+                PLATFORM CAPABILITIES
+            </span>
+
+            <h2>
+                Intelligent Assessment Features
+            </h2>
+
+            <p>
+                Everything you need for a smarter,
+                more secure, and personalized
+                assessment experience.
+            </p>
+
+        </div>
+
+
+        <div class="feature-grid">
+
+
+            <!-- FEATURE 1 -->
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+
+                    <i class="fa-solid fa-sliders"></i>
+
+                </div>
+
+                <h3>
+                    Adaptive Testing
+                </h3>
+
+                <p>
+                    Questions dynamically adapt to
+                    the learner's performance and
+                    knowledge level.
+                </p>
+
+            </div>
+
+
+            <!-- FEATURE 2 -->
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+
+                    <i class="fa-solid fa-video"></i>
+
+                </div>
+
+                <h3>
+                    AI Proctoring
+                </h3>
+
+                <p>
+                    Intelligent monitoring helps detect
+                    suspicious activity during online
+                    examinations.
+                </p>
+
+            </div>
+
+
+            <!-- FEATURE 3 -->
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+
+                    <i class="fa-solid fa-chart-line"></i>
+
+                </div>
+
+                <h3>
+                    Performance Analytics
+                </h3>
+
+                <p>
+                    Track scores, domain performance,
+                    strengths, weaknesses, and
+                    assessment progress.
+                </p>
+
+            </div>
+
+
+            <!-- FEATURE 4 -->
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+
+                    <i class="fa-solid fa-brain"></i>
+
+                </div>
+
+                <h3>
+                    Smart Recommendations
+                </h3>
+
+                <p>
+                    AI-powered recommendations help
+                    identify areas that require
+                    additional practice.
+                </p>
+
+            </div>
+
+
+            <!-- FEATURE 5 -->
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                </div>
+
+                <h3>
+                    Secure Examination
+                </h3>
+
+                <p>
+                    Multiple layers of monitoring and
+                    verification help maintain
+                    examination integrity.
+                </p>
+
+            </div>
+
+
+            <!-- FEATURE 6 -->
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+
+                    <i class="fa-solid fa-display"></i>
+
+                </div>
+
+                <h3>
+                    Real-Time Monitoring
+                </h3>
+
+                <p>
+                    Examination activity can be
+                    monitored through intelligent
+                    real-time verification.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     DOMAINS
+     ========================================================= -->
+
+<section
+    id="domains"
+    class="landing-section domains-section"
+>
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span>
+                ASSESSMENT AREAS
+            </span>
+
+            <h2>
+                Choose Your Domain
+            </h2>
+
+            <p>
+                Assess your knowledge across
+                multiple technical and aptitude areas.
+            </p>
+
+        </div>
+
+
+        <div class="domain-grid">
+
+
+            <!-- AI & ML -->
+
+            <div class="landing-domain-card">
+
+                <div class="landing-domain-icon">
+
+                    <i class="fa-solid fa-brain"></i>
+
+                </div>
+
+                <h3>
+                    AI &amp; Machine Learning
+                </h3>
+
+                <p>
+                    Machine learning, artificial
+                    intelligence, deep learning,
+                    and related concepts.
+                </p>
+
+            </div>
+
+
+            <!-- DATA ANALYTICS -->
+
+            <div class="landing-domain-card">
+
+                <div class="landing-domain-icon">
+
+                    <i class="fa-solid fa-chart-column"></i>
+
+                </div>
+
+                <h3>
+                    Data Analytics
+                </h3>
+
+                <p>
+                    Data analysis, statistics,
+                    visualization, and
+                    data-driven insights.
+                </p>
+
+            </div>
+
+
+            <!-- FULL STACK -->
+
+            <div class="landing-domain-card">
+
+                <div class="landing-domain-icon">
+
+                    <i class="fa-solid fa-code"></i>
+
+                </div>
+
+                <h3>
+                    Full Stack
+                </h3>
+
+                <p>
+                    Frontend, backend, databases,
+                    APIs, and full-stack
+                    development.
+                </p>
+
+            </div>
+
+
+            <!-- DEVOPS -->
+
+            <div class="landing-domain-card">
+
+                <div class="landing-domain-icon">
+
+                    <i class="fa-solid fa-server"></i>
+
+                </div>
+
+                <h3>
+                    DevOps
+                </h3>
+
+                <p>
+                    CI/CD, cloud computing,
+                    containers, automation,
+                    and deployment.
+                </p>
+
+            </div>
+
+
+            <!-- APTITUDE -->
+
+            <div class="landing-domain-card">
+
+                <div class="landing-domain-icon">
+
+                    <i class="fa-solid fa-calculator"></i>
+
+                </div>
+
+                <h3>
+                    Aptitude
+                </h3>
+
+                <p>
+                    Quantitative aptitude,
+                    logical reasoning, and
+                    problem solving.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ABOUT
+     ========================================================= -->
+
+<section
+    id="about"
+    class="landing-section about-section"
+>
+
+    <div class="container">
+
+        <div class="about-content">
+
+
+            <!-- ABOUT TEXT -->
+
+            <div class="about-text">
+
+                <span>
+                    ABOUT ASSESSIQ AI
+                </span>
+
+                <h2>
+                    Smarter Assessments.
+                    Better Insights.
+                </h2>
+
+                <p>
+                    AssessIQ AI is an intelligent online
+                    examination platform designed to
+                    evaluate knowledge, skills, and
+                    performance through AI-powered
+                    assessment technologies.
+                </p>
+
+                <p>
+                    The platform combines adaptive
+                    testing, intelligent proctoring,
+                    semantic question recommendations,
+                    and performance analytics to create
+                    a personalized and secure assessment
+                    experience.
+                </p>
+
+                <a
+                    href="/login"
+                    class="btn-primary-custom"
+                >
+                    Start Assessment
+                </a>
+
+            </div>
+
+
+            <!-- ABOUT STATS -->
+
+            <div class="about-highlight">
+
+                <div class="about-stat">
+
+                    <strong>
+                        22,854+
+                    </strong>
+
+                    <span>
+                        Questions
+                    </span>
+
+                </div>
+
+
+                <div class="about-stat">
+
+                    <strong>
+                        5
+                    </strong>
+
+                    <span>
+                        Assessment Domains
+                    </span>
+
+                </div>
+
+
+                <div class="about-stat">
+
+                    <strong>
+                        AI
+                    </strong>
+
+                    <span>
+                        Powered Evaluation
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
+<footer class="landing-footer">
+
+    <div class="container">
+
+        <div class="footer-content">
+
+            <div class="footer-brand">
+
+                <i class="fa-solid fa-brain"></i>
+
+                <span>
+                    AssessIQ AI
+                </span>
+
+            </div>
+
+            <p>
+                Intelligent assessment and
+                AI-powered skill evaluation.
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>
+
+{% endblock %}

@@ -1,0 +1,1172 @@
+
+/* =========================================================
+   ASSESSIQ AI
+   PROFESSIONAL DASHBOARD
+   Existing Navy + Blue Theme
+   ========================================================= */
+
+
+/* =========================================================
+   GOOGLE FONT
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #09111F;
+    color: #FFFFFF;
+}
+
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
+
+.dashboard {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.sidebar {
+    width: 270px;
+    min-width: 270px;
+
+    background: #111827;
+
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+
+    padding: 30px 20px;
+
+    min-height: 100vh;
+
+    position: sticky;
+    top: 0;
+
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+.logo {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    font-size: 26px;
+    font-weight: 700;
+
+    margin: 5px 10px 48px;
+
+    white-space: nowrap;
+}
+
+.logo i {
+    color: #3B82F6;
+
+    font-size: 27px;
+}
+
+
+/* =========================================================
+   SIDEBAR NAVIGATION
+   ========================================================= */
+
+.sidebar nav {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.sidebar nav a {
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    min-height: 50px;
+
+    padding: 13px 16px;
+
+    color: #CBD5E1;
+
+    text-decoration: none;
+
+    border-radius: 11px;
+
+    font-size: 15px;
+
+    font-weight: 500;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.sidebar nav a i {
+    width: 20px;
+
+    text-align: center;
+
+    font-size: 15px;
+}
+
+.sidebar nav a:hover {
+    background: rgba(37, 99, 235, 0.14);
+
+    color: #FFFFFF;
+
+    transform: translateX(2px);
+}
+
+.sidebar nav .active {
+    background: #2563EB;
+
+    color: #FFFFFF;
+}
+
+
+/* =========================================================
+   SIDEBAR PROFILE
+   ========================================================= */
+
+.sidebar-profile {
+    margin-top: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 13px;
+
+    background: #0F172A;
+
+    border: 1px solid rgba(255, 255, 255, 0.07);
+
+    border-radius: 14px;
+
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.sidebar-profile:hover {
+    background: #131E30;
+
+    border-color: rgba(59, 130, 246, 0.35);
+}
+
+
+/* =========================================================
+   PROFILE AVATAR
+   ========================================================= */
+
+.sidebar-profile-avatar {
+    width: 40px;
+    height: 40px;
+
+    min-width: 40px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #2563EB;
+
+    color: #FFFFFF;
+
+    font-size: 15px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   PROFILE INFORMATION
+   ========================================================= */
+
+.sidebar-profile-info {
+    min-width: 0;
+
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+.sidebar-profile-info strong {
+    color: #F8FAFC;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+.sidebar-profile-info span {
+    color: #94A3B8;
+
+    font-size: 11px;
+
+    margin-top: 2px;
+}
+
+
+/* =========================================================
+   PROFILE ARROW
+   ========================================================= */
+
+.sidebar-profile-arrow {
+    width: 28px;
+    height: 28px;
+
+    min-width: 28px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    color: #94A3B8;
+
+    text-decoration: none;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.sidebar-profile-arrow:hover {
+    background: rgba(59, 130, 246, 0.15);
+
+    color: #60A5FA;
+
+    transform: translateX(2px);
+}
+
+.sidebar-profile-arrow i {
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+.main-content {
+    flex: 1;
+
+    width: calc(100% - 270px);
+
+    min-width: 0;
+
+    padding: 38px 48px 55px;
+}
+
+
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+
+.topbar {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 34px;
+}
+
+.topbar h1 {
+    font-size: 36px;
+
+    line-height: 1.25;
+
+    font-weight: 700;
+
+    letter-spacing: -0.5px;
+}
+
+.topbar p {
+    color: #94A3B8;
+
+    margin-top: 9px;
+
+    font-size: 18px;
+
+    font-weight: 500;
+
+    letter-spacing: 0.1px;
+}
+
+
+/* =========================================================
+   TOP ICONS
+   ========================================================= */
+
+.top-icons {
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+.top-icons i {
+    font-size: 21px;
+
+    cursor: pointer;
+
+    color: #CBD5E1;
+
+    transition: 0.25s ease;
+}
+
+.top-icons i:hover {
+    color: #3B82F6;
+}
+
+
+/* =========================================================
+   PROFILE CIRCLE
+   ========================================================= */
+
+.profile-circle {
+    width: 44px;
+    height: 44px;
+
+    background: #2563EB;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   STATISTICS
+   ========================================================= */
+
+.stats {
+    display: grid;
+
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-bottom: 48px;
+}
+
+
+/* =========================================================
+   STAT CARD
+   ========================================================= */
+
+.stat-card {
+    background: #111827;
+
+    border: 1px solid rgba(255, 255, 255, 0.055);
+
+    border-radius: 16px;
+
+    min-height: 125px;
+
+    padding: 22px 23px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+
+    border-color: rgba(59, 130, 246, 0.45);
+
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+}
+
+.stat-card h3 {
+    font-size: 31px;
+
+    line-height: 1.2;
+
+    font-weight: 700;
+
+    margin-bottom: 7px;
+
+    color: #FFFFFF;
+}
+
+.stat-card span {
+    color: #94A3B8;
+
+    font-size: 13px;
+
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   SECTION TITLE
+   ========================================================= */
+
+.section-title {
+    font-size: 23px;
+
+    line-height: 1.3;
+
+    font-weight: 600;
+
+    margin-bottom: 20px;
+
+    color: #F8FAFC;
+}
+
+
+/* =========================================================
+   DOMAIN GRID
+   ========================================================= */
+
+.domains {
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-bottom: 48px;
+}
+
+
+/* =========================================================
+   DOMAIN CARD
+   ========================================================= */
+
+.domain-card {
+    position: relative;
+
+    background: #111827;
+
+    border: 1px solid rgba(255, 255, 255, 0.055);
+
+    border-radius: 17px;
+
+    min-height: 235px;
+
+    padding: 23px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.domain-card:hover {
+    transform: translateY(-4px);
+
+    border-color: rgba(59, 130, 246, 0.45);
+
+    box-shadow:
+        0 14px 30px rgba(0, 0, 0, 0.25);
+}
+
+
+/* =========================================================
+   DOMAIN ICON
+   ========================================================= */
+
+.domain-card > i {
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(37, 99, 235, 0.12);
+
+    border-radius: 11px;
+
+    color: #3B82F6;
+
+    font-size: 21px;
+
+    margin-bottom: 17px;
+}
+
+
+/* =========================================================
+   DOMAIN TITLE
+   ========================================================= */
+
+.domain-card h3 {
+    font-size: 18px;
+
+    font-weight: 600;
+
+    color: #F8FAFC;
+
+    margin-bottom: 6px;
+}
+
+
+/* =========================================================
+   DOMAIN DESCRIPTION
+   ========================================================= */
+
+.domain-card p {
+    color: #94A3B8;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================================================
+   START ASSESSMENT
+   ========================================================= */
+
+.start-btn {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    width: 100%;
+
+    margin-top: auto;
+
+    padding: 10px 11px 10px 15px;
+
+    background: rgba(37, 99, 235, 0.10);
+
+    color: #DCEBFF;
+
+    border: 1px solid rgba(59, 130, 246, 0.20);
+
+    border-radius: 11px;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease;
+}
+
+
+/* =========================================================
+   START BUTTON ARROW
+   ========================================================= */
+
+.start-btn i {
+    width: 32px;
+    height: 32px;
+
+    min-width: 32px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin: 0;
+
+    border-radius: 9px;
+
+    background: #2563EB;
+
+    color: #FFFFFF;
+
+    font-size: 13px;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease;
+}
+
+
+/* =========================================================
+   START BUTTON HOVER
+   ========================================================= */
+
+.start-btn:hover {
+    background: rgba(37, 99, 235, 0.18);
+
+    border-color: rgba(59, 130, 246, 0.45);
+
+    color: #FFFFFF;
+}
+
+.start-btn:hover i {
+    background: #1D4ED8;
+
+    transform: translateX(3px);
+}
+
+
+/* =========================================================
+   RECENT ASSESSMENTS
+   ========================================================= */
+
+.recent-table {
+    display: flex;
+
+    flex-direction: column;
+
+    background: #111827;
+
+    border: 1px solid rgba(255, 255, 255, 0.055);
+
+    border-radius: 16px;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   RECENT ASSESSMENT ROW
+   ========================================================= */
+
+.recent-table > a {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    min-height: 60px;
+
+    padding: 14px 20px;
+
+    color: #CBD5E1;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease;
+}
+
+.recent-table > a:last-child {
+    border-bottom: none;
+}
+
+.recent-table > a:hover {
+    background: rgba(37, 99, 235, 0.08);
+
+    color: #FFFFFF;
+}
+
+.recent-table > a strong {
+    color: #60A5FA;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   NO RECENT ASSESSMENTS
+   ========================================================= */
+
+.recent-table > p {
+    padding: 25px 20px;
+
+    color: #94A3B8;
+
+    font-size: 14px;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   AI VERIFICATION MODAL
+   ========================================================= */
+
+.verification-modal {
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.65);
+
+    backdrop-filter: blur(8px);
+
+    display: none;
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 9999;
+}
+
+
+/* =========================================================
+   VERIFICATION BOX
+   ========================================================= */
+
+.verification-box {
+    width: 1200px;
+
+    max-width: 95%;
+
+    background: #111827;
+
+    border-radius: 24px;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow: 0 35px 80px rgba(0, 0, 0, 0.45);
+
+    overflow: hidden;
+
+    animation: popup 0.35s ease;
+}
+
+
+/* =========================================================
+   POPUP ANIMATION
+   ========================================================= */
+
+@keyframes popup {
+
+    from {
+        opacity: 0;
+
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+
+        transform: scale(1);
+    }
+
+}
+
+
+/* =========================================================
+   VERIFICATION HEADER
+   ========================================================= */
+
+.verification-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 22px 30px;
+
+    background: #1E293B;
+}
+
+.verification-header h2 {
+    color: #FFFFFF;
+
+    font-size: 28px;
+}
+
+.verification-header button {
+    background: none;
+
+    border: none;
+
+    color: #FFFFFF;
+
+    font-size: 28px;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   VERIFICATION BODY
+   ========================================================= */
+
+.verification-body {
+    display: grid;
+
+    grid-template-columns: 1.2fr 0.8fr;
+
+    gap: 30px;
+
+    padding: 30px;
+}
+
+
+/* =========================================================
+   CAMERA PANEL
+   ========================================================= */
+
+.camera-panel {
+    background: #0F172A;
+
+    border-radius: 18px;
+
+    padding: 18px;
+}
+
+.camera-panel img {
+    width: 100%;
+
+    height: 420px;
+
+    border-radius: 14px;
+
+    object-fit: cover;
+
+    background: #000000;
+}
+
+
+/* =========================================================
+   STATUS PANEL
+   ========================================================= */
+
+.status-panel {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 16px;
+}
+
+
+/* =========================================================
+   STATUS ROW
+   ========================================================= */
+
+.status-row {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    background: #1E293B;
+
+    color: #FFFFFF;
+
+    padding: 18px;
+
+    border-radius: 14px;
+}
+
+
+/* =========================================================
+   TIMELINE
+   ========================================================= */
+
+.timeline {
+    padding: 0 30px 30px;
+}
+
+.timeline h3 {
+    color: #FFFFFF;
+
+    margin-bottom: 15px;
+}
+
+#timelineLogs {
+    background: #0F172A;
+
+    color: #CBD5E1;
+
+    border-radius: 14px;
+
+    padding: 20px;
+
+    line-height: 2;
+
+    min-height: 120px;
+}
+
+
+/* =========================================================
+   VERIFICATION FOOTER
+   ========================================================= */
+
+.verification-footer {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 20px;
+
+    padding: 25px 30px;
+
+    background: #1E293B;
+}
+
+.verification-footer button {
+    padding: 14px 28px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    font-weight: 600;
+}
+
+.verification-footer button:first-child {
+    background: #334155;
+
+    color: #FFFFFF;
+}
+
+#beginExam {
+    background: #2563EB;
+
+    color: #FFFFFF;
+}
+
+#beginExam:disabled {
+    background: #475569;
+
+    cursor: not-allowed;
+
+    opacity: 0.6;
+}
+
+
+/* =========================================================
+   RESPONSIVE — LARGE TABLET
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+    .main-content {
+        padding: 34px 32px 45px;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .domains {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 850px) {
+
+    .sidebar {
+        width: 220px;
+
+        min-width: 220px;
+    }
+
+    .main-content {
+        width: calc(100% - 220px);
+
+        padding: 30px 24px;
+    }
+
+    .topbar h1 {
+        font-size: 30px;
+    }
+
+    .topbar p {
+        font-size: 16px;
+    }
+
+    .domains {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    .dashboard {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        position: relative;
+
+        width: 100%;
+
+        min-width: 100%;
+
+        height: auto;
+
+        min-height: auto;
+
+        padding: 20px;
+    }
+
+    .logo {
+        margin: 0 0 20px;
+    }
+
+    .sidebar nav {
+        gap: 5px;
+    }
+
+    .sidebar nav a {
+        min-height: 44px;
+    }
+
+    .sidebar-profile {
+        margin-top: 20px;
+    }
+
+    .main-content {
+        width: 100%;
+
+        padding: 28px 18px 40px;
+    }
+
+    .topbar {
+        margin-bottom: 28px;
+    }
+
+    .topbar h1 {
+        font-size: 27px;
+    }
+
+    .topbar p {
+        font-size: 15px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+
+        margin-bottom: 38px;
+    }
+
+    .stat-card {
+        min-height: 105px;
+    }
+
+    .section-title {
+        font-size: 21px;
+    }
+
+    .domains {
+        grid-template-columns: 1fr;
+
+        gap: 14px;
+    }
+
+    .domain-card {
+        min-height: 220px;
+    }
+
+    .verification-body {
+        grid-template-columns: 1fr;
+
+        padding: 20px;
+    }
+
+    .camera-panel img {
+        height: 300px;
+    }
+
+}
+

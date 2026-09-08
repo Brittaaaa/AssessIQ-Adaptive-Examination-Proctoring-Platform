@@ -1,0 +1,18 @@
+﻿venv/
+__pycache__/
+*.pyc
+.env
+.vscode/
+
+# Local database
+database/assessiq.db
+
+# Python cache
+*.pyo
+
+# Temporary files
+*.log
+
+# Large generated ML files
+models/similarity_matrix.pkl
+models/question_embeddings.pkl

@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+
+{% block title %}Pre-Exam Verification{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pre_exam.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="verification-page">
+
+    <div class="verification-card">
+
+        <h1>Pre-Exam Verification</h1>
+
+        <p>
+            Complete all checks before starting your assessment.
+        </p>
+
+       <div class="verification-layout">
+
+    <!-- LEFT SIDE -->
+
+    <div class="camera-card">
+
+        <div class="card-header">
+            <i class="fa-solid fa-video"></i>
+            <span>Live Camera</span>
+        </div>
+
+        <img id="camera" src="" alt="Live Camera Feed">
+
+        <button class="start-btn" onclick="startCamera()">
+            Start Verification
+        </button>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+
+    <div class="status-card">
+
+        <h2>AI Verification</h2>
+
+        <div class="status-row">
+            <span><i class="fa-solid fa-camera"></i> Camera</span>
+            <span id="cameraStatus" class="waiting">Waiting</span>
+        </div>
+
+        <div class="status-row">
+            <span><i class="fa-solid fa-face-smile"></i> Face Detection</span>
+            <span id="faceStatus" class="waiting">Waiting</span>
+        </div>
+
+        <div class="status-row">
+            <span><i class="fa-solid fa-users"></i> Person Count</span>
+            <span id="personStatus" class="waiting">Waiting</span>
+        </div>
+
+        <div class="status-row">
+            <span><i class="fa-solid fa-mobile-screen"></i> Phone Detection</span>
+            <span id="phoneStatus" class="waiting">Waiting</span>
+        </div>
+
+        <div class="status-row">
+            <span><i class="fa-solid fa-eye"></i> Eye Tracking</span>
+            <span id="eyeStatus" class="waiting">Waiting</span>
+        </div>
+
+        <hr>
+
+        <div class="overall">
+            Overall Status
+            <div id="overallStatus">
+                Waiting for Verification
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+async function startCamera() {
+
+    try {
+
+        document.getElementById("camera").src = "/video_feed";
+
+        updateStatus("cameraStatus", "Connected", true);
+        updateStatus("faceStatus", "Detecting...", null);
+        updateStatus("personStatus", "Checking...", null);
+        updateStatus("phoneStatus", "Checking...", null);
+        updateStatus("eyeStatus", "Checking...", null);
+
+        document.getElementById("overallStatus").innerHTML =
+        "Running AI Verification...";
+        setInterval(checkVerification,1000);
+
+    }
+
+    catch(error){
+
+        updateStatus("cameraStatus","Permission Denied",false);
+
+        document.getElementById("overallStatus").innerHTML =
+        "Camera Access Failed";
+
+    }
+
+}
+
+function updateStatus(id,text,status){
+
+    const element=document.getElementById(id);
+
+    element.innerHTML=text;
+
+    element.classList.remove("waiting","success","fail");
+
+    if(status===true){
+
+        element.classList.add("success");
+
+    }
+
+    else if(status===false){
+
+        element.classList.add("fail");
+
+    }
+
+    else{
+
+        element.classList.add("waiting");
+
+    }
+
+}
+async function checkVerification(){
+
+    try{
+
+        const response = await fetch("/verify");
+
+        const data = await response.json();
+
+        updateStatus(
+            "cameraStatus",
+            data.camera ? "Connected" : "Not Connected",
+            data.camera
+        );
+
+        updateStatus(
+            "faceStatus",
+            data.face ? "Detected" : "Not Detected",
+            data.face
+        );
+
+        updateStatus(
+            "personStatus",
+            data.person ? "One Person" : "Multiple/No Person",
+            data.person
+        );
+
+        updateStatus(
+            "phoneStatus",
+            data.phone ? "No Phone" : "Phone Detected",
+            data.phone
+        );
+
+        // Eye tracking placeholder for now
+        updateStatus(
+            "eyeStatus",
+            "Coming Soon",
+            null
+        );
+
+        if(data.camera && data.face && data.person && data.phone){
+
+            document.getElementById("overallStatus").innerHTML =
+            "🟢 READY TO START";
+
+        }
+
+        else{
+
+            document.getElementById("overallStatus").innerHTML =
+            "🔴 Verification Failed";
+
+        }
+
+    }
+
+    catch(error){
+
+        console.log(error);
+
+    }
+
+}
+</script>
+
+{% endblock %}

@@ -1,0 +1,867 @@
+{% extends 'base.html' %}
+
+{% block title %}Difficulty | AssessIQ AI{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/difficulty.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<main class="difficulty-page">
+
+    <div class="difficulty-container">
+
+        <div class="header">
+
+            <h1>Select Assessment Difficulty</h1>
+
+            <p>
+                Domain:
+                <span>{{ domain_name }}</span>
+            </p>
+
+        </div>
+
+
+        <div class="difficulty-grid">
+
+            {% for key, title, copy, time in [
+                ('easy', 'Easy', 'Beginner-friendly core concepts', '20 minutes'),
+                ('medium', 'Medium', 'Balanced interview-level assessment', '25 minutes'),
+                ('hard', 'Hard', 'Advanced industry-level challenge', '30 minutes'),
+                ('adaptive', 'Adaptive AI', 'Difficulty responds to your answers', '25 minutes')
+            ] %}
+
+           <section class="difficulty-card {{ key }}">
+
+             <h2>{{ title }}</h2>
+
+            <p>{{ copy }}</p>
+
+            <ul>
+                <li>20 questions</li>
+                <li>{{ time }}</li>
+                <li>
+                    {% if key == 'adaptive' %}
+                        AI-adjusted progression
+                    {% else %}
+                        Curated {{ title|lower }} questions
+                     {% endif %}
+                </li>
+            </ul>
+
+            <button class="select-btn" data-difficulty="{{ key }}">
+                    Continue
+                    <i class="fa-solid fa-arrow-right"></i>
+             </button>
+
+            </section>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- ============================================================
+     AI SECURITY VERIFICATION MODAL
+     ============================================================ -->
+
+<div
+    id="verificationModal"
+    class="verification-modal"
+    aria-hidden="true"
+>
+
+    <div class="verification-box">
+
+
+        <!-- Header -->
+
+        <div class="verification-header">
+
+            <h2>
+                AI Security Verification
+            </h2>
+
+            <button
+                id="closeVerification"
+                type="button"
+                aria-label="Close"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- Verification Body -->
+
+        <div class="verification-body">
+
+
+            <!-- Camera -->
+
+            <div class="camera-panel">
+
+                <img
+                    id="cameraFeed"
+                    alt="Live camera feed"
+                >
+
+                <p>
+                    Live camera feed
+                </p>
+
+            </div>
+
+
+            <!-- Security Status -->
+
+            <div class="status-panel">
+
+                <div class="status-row">
+
+                    <span>
+                        <i class="fa-solid fa-camera"></i>
+                        Camera
+                    </span>
+
+                    <span id="cameraStatus">
+                        Waiting
+                    </span>
+
+                </div>
+
+
+                <div class="status-row">
+
+                    <span>
+                        <i class="fa-solid fa-face-smile"></i>
+                        Face Detection
+                    </span>
+
+                    <span id="faceStatus">
+                        Waiting
+                    </span>
+
+                </div>
+
+
+                <div class="status-row">
+
+                    <span>
+                        <i class="fa-solid fa-users"></i>
+                        Person Count
+                    </span>
+
+                    <span id="personStatus">
+                        Waiting
+                    </span>
+
+                </div>
+
+
+                <div class="status-row">
+
+                    <span>
+                        <i class="fa-solid fa-mobile-screen"></i>
+                        Phone Detection
+                    </span>
+
+                    <span id="phoneStatus">
+                        Waiting
+                    </span>
+
+                </div>
+
+
+                <div class="status-row">
+
+                    <span>
+                        <i class="fa-solid fa-book"></i>
+                        Book Detection
+                    </span>
+
+                    <span id="bookStatus">
+                        Waiting
+                    </span>
+
+                </div>
+
+
+                <div class="status-row">
+
+                    <span>
+                        <i class="fa-solid fa-eye"></i>
+                        Eye Tracking
+                    </span>
+
+                    <span id="eyeStatus">
+                        Waiting
+                    </span>
+
+                </div>
+
+                <div class="status-row">
+
+                     <span>
+                        <i class="fa-solid fa-microphone"></i>
+                        Microphone
+                    </span>
+
+                    <span id="microphoneStatus">
+                         Waiting
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Timeline -->
+
+        <div class="timeline">
+
+            <h3>
+                Verification status
+            </h3>
+
+            <div id="timelineLogs">
+                Initializing live AI checks…
+            </div>
+
+        </div>
+
+
+        <!-- Footer -->
+
+        <div class="verification-footer">
+
+            <button
+                id="cancelVerification"
+                type="button"
+            >
+                Cancel
+            </button>
+
+            <button
+                id="beginExam"
+                type="button"
+                disabled
+            >
+                Begin Exam
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block js %}
+
+<script>
+
+/*
+============================================================
+PAGE DATA
+============================================================
+*/
+
+const domain = {{ domain|tojson }};
+
+let examId = null;
+let verificationTimer = null;
+
+let microphoneStream = null;
+let microphoneReady = false;
+
+/*
+============================================================
+ELEMENTS
+============================================================
+*/
+
+const modal =
+    document.getElementById("verificationModal");
+
+const beginButton =
+    document.getElementById("beginExam");
+
+const cameraFeed =
+    document.getElementById("cameraFeed");
+
+const timeline =
+    document.getElementById("timelineLogs");
+
+
+/*
+============================================================
+DIFFICULTY BUTTONS
+============================================================
+*/
+
+const difficultyButtons =
+    document.querySelectorAll(".select-btn");
+
+
+difficultyButtons.forEach(button => {
+
+    button.addEventListener("click", async () => {
+
+        const difficulty =
+            button.dataset.difficulty;
+
+        microphoneReady = false;
+        microphoneStream = null;
+    
+
+        console.log(
+            "Selected difficulty:",
+            difficulty
+        );
+
+
+        /*
+        Disable all buttons while
+        creating the exam.
+        */
+
+        difficultyButtons.forEach(btn => {
+            btn.disabled = true;
+        });
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/exam/create",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            domain: domain,
+                            difficulty: difficulty
+                        })
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            console.log(
+                "Create exam response:",
+                data
+            );
+
+
+            if (!response.ok) {
+
+                alert(
+                    data.error ||
+                    "Unable to create the examination."
+                );
+
+                difficultyButtons.forEach(btn => {
+                    btn.disabled = false;
+                });
+
+                return;
+            }
+
+
+            /*
+            Save the generated exam ID.
+            */
+
+            examId = data.exam_id;
+
+
+            /*
+            Open verification modal.
+            */
+
+            modal.style.display = "flex";
+
+            modal.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+
+
+            /*
+            Start camera feed.
+            */
+
+            cameraFeed.src =
+                "{{ url_for('video_feed') }}";
+
+
+            /*
+            Start AI verification.
+            */
+
+            await checkVerification();
+
+
+            verificationTimer =
+                setInterval(
+                    checkVerification,
+                    1200
+                );
+
+
+        } catch (error) {
+
+            console.error(
+                "Exam creation error:",
+                error
+            );
+
+            alert(
+                "Unable to start the assessment. Please try again."
+            );
+
+
+            difficultyButtons.forEach(btn => {
+                btn.disabled = false;
+            });
+
+        }
+
+    });
+
+});
+
+
+/*
+============================================================
+CLOSE VERIFICATION
+============================================================
+*/
+
+function closeVerification() {
+
+    if (verificationTimer) {
+
+        clearInterval(
+            verificationTimer
+        );
+
+        verificationTimer = null;
+    }
+
+
+    /* Stop microphone */
+
+    if (microphoneStream) {
+
+        microphoneStream
+            .getTracks()
+            .forEach(track => track.stop());
+
+        microphoneStream = null;
+    }
+
+    microphoneReady = false;
+
+
+    modal.style.display = "none";
+
+    modal.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+    cameraFeed.src = "";
+
+    beginButton.disabled = true;
+
+    beginButton.textContent = "Begin Exam";
+
+    examId = null;
+
+
+    difficultyButtons.forEach(button => {
+        button.disabled = false;
+    });
+}
+
+
+document
+    .getElementById("closeVerification")
+    .addEventListener(
+        "click",
+        closeVerification
+    );
+
+
+document
+    .getElementById("cancelVerification")
+    .addEventListener(
+        "click",
+        closeVerification
+    );
+
+
+/*
+============================================================
+UPDATE STATUS
+============================================================
+*/
+
+function setStatus(
+    key,
+    passed,
+    successText,
+    failureText
+) {
+
+    const element =
+        document.getElementById(
+            `${key}Status`
+        );
+
+
+    if (!element) {
+        return;
+    }
+
+
+    element.textContent =
+        passed
+            ? `● ${successText}`
+            : `● ${failureText}`;
+
+
+    element.className =
+        passed
+            ? "good"
+            : "bad";
+}
+
+
+/*
+============================================================
+AI SECURITY VERIFICATION
+============================================================
+*/
+
+async function checkVerification() {
+
+    try {
+
+        const response = await fetch(
+            "/verify",
+            {
+                cache: "no-store"
+            }
+        );
+
+        if (!response.ok) {
+            beginButton.disabled = true;
+            return;
+        }
+
+        const data = await response.json();
+
+        console.log(
+            "Verification result:",
+            data
+        );
+
+
+        /* =========================
+           CAMERA
+        ========================= */
+
+        setStatus(
+            "camera",
+            data.camera,
+            "Connected",
+            "Disconnected"
+        );
+
+
+        /* =========================
+           FACE
+        ========================= */
+
+        setStatus(
+            "face",
+            data.face,
+            "Face detected",
+            "No face"
+        );
+
+
+        /* =========================
+           PERSON
+        ========================= */
+
+        setStatus(
+            "person",
+            data.person,
+            "Single person",
+            data.person_count > 1
+                ? "Multiple people"
+                : "Candidate not detected"
+        );
+
+
+        /* =========================
+           PHONE
+        ========================= */
+
+        setStatus(
+            "phone",
+            !data.phone,
+            "No phone",
+            "Phone detected"
+        );
+
+
+        /* =========================
+           BOOK
+        ========================= */
+
+        setStatus(
+            "book",
+            !data.book,
+            "No book",
+            "Book detected"
+        );
+
+
+        /* =========================
+           EYE
+        ========================= */
+
+        setStatus(
+            "eye",
+            data.eye,
+            "Looking at screen",
+            "Looking away"
+        );
+
+
+        /* =========================
+           MICROPHONE
+        ========================= */
+
+        if (!microphoneReady) {
+
+            try {
+
+                microphoneStream =
+                    await navigator.mediaDevices.getUserMedia({
+                        audio: true
+                    });
+
+                microphoneReady = true;
+
+            } catch (error) {
+
+                console.error(
+                    "Microphone access error:",
+                    error
+                );
+
+                microphoneReady = false;
+            }
+        }
+
+
+        setStatus(
+            "microphone",
+            microphoneReady,
+            "Connected",
+            "Microphone unavailable"
+        );
+
+
+        /* =========================
+           FINAL VERIFICATION
+        ========================= */
+
+        const valid =
+            Boolean(data.camera) &&
+            Boolean(data.face) &&
+            Boolean(data.person) &&
+            data.person_count === 1 &&
+            !data.phone &&
+            !data.book &&
+            Boolean(data.eye) &&
+            microphoneReady;
+
+
+        beginButton.disabled = !valid;
+
+
+        if (valid) {
+
+            timeline.textContent =
+                "✓ Candidate verified successfully. You can begin the examination.";
+
+        } else {
+
+            timeline.textContent =
+                "Waiting for all required security checks…";
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Verification error:",
+            error
+        );
+
+        beginButton.disabled = true;
+
+        timeline.textContent =
+            "Unable to connect to AI verification.";
+    }
+}
+/*
+============================================================
+BEGIN EXAM
+============================================================
+*/
+
+beginButton.addEventListener(
+    "click",
+    async () => {
+
+        if (!examId) {
+
+            alert(
+                "Exam session was not created."
+            );
+
+            return;
+        }
+
+
+        beginButton.disabled = true;
+
+        beginButton.textContent =
+            "Starting Exam...";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `/api/exam/${examId}/verify`,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        }
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            console.log(
+                "Verification submission:",
+                data
+            );
+
+
+            if (!response.ok) {
+
+                alert(
+                    data.error ||
+                    "Security verification failed."
+                );
+
+
+                beginButton.disabled = false;
+
+                beginButton.textContent =
+                    "Begin Exam";
+
+                return;
+            }
+
+
+            /*
+            Stop verification polling.
+            */
+
+            if (verificationTimer) {
+
+                clearInterval(
+                    verificationTimer
+                );
+
+                verificationTimer = null;
+            }
+
+
+            /*
+            Stop camera feed.
+            The exam page will start its
+            own proctoring flow.
+            */
+
+            cameraFeed.src = "";
+
+
+            /*
+            Go to exam page.
+            */
+
+            window.location.href =
+                data.exam_url;
+
+
+        } catch (error) {
+
+            console.error(
+                "Begin exam error:",
+                error
+            );
+
+
+            alert(
+                "Unable to begin the examination. Please try again."
+            );
+
+
+            beginButton.disabled = false;
+
+            beginButton.textContent =
+                "Begin Exam";
+        }
+
+    }
+);
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,691 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile | AssessIQ AI{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="profile-page">
+
+    <!-- =========================
+         PROFILE HEADER
+    ========================== -->
+
+    <div class="profile-header">
+
+        <div>
+            <span class="page-label">ACCOUNT</span>
+
+            <h1>Profile</h1>
+
+            <p>
+                Your AssessIQ AI learning and assessment profile
+            </p>
+        </div>
+
+        <a href="/dashboard" class="back-dashboard">
+            <i class="fa-solid fa-arrow-left"></i>
+            Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         PROFILE OVERVIEW
+    ========================== -->
+
+    <section class="profile-overview">
+
+        <div class="profile-identity">
+
+            <div class="profile-avatar">
+                {{ username[0]|upper }}
+            </div>
+
+            <div class="identity-content">
+
+                <h2>
+                    {{ profile.student.username }}
+                </h2>
+
+                <span class="student-badge">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    Student Account
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="account-info">
+
+            <span>Member since</span>
+
+            <strong>
+                {% if profile.student.created_at %}
+                    {{ profile.student.created_at[:10] }}
+                {% else %}
+                    —
+                {% endif %}
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         ASSESSMENT OVERVIEW
+    ========================== -->
+
+    <h2 class="section-title">
+        Assessment Overview
+    </h2>
+
+
+    <div class="profile-stats">
+
+        <!-- Tests Completed -->
+
+        <div class="profile-stat-card">
+
+            <div class="stat-icon">
+                <i class="fa-solid fa-file-circle-check"></i>
+            </div>
+
+            <div class="stat-content">
+
+                <span>
+                    Tests Completed
+                </span>
+
+                <strong>
+                    {{ profile.tests_taken }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- Average Accuracy -->
+
+        <div class="profile-stat-card">
+
+            <div class="stat-icon">
+                <i class="fa-solid fa-bullseye"></i>
+            </div>
+
+            <div class="stat-content">
+
+                <span>
+                    Average Accuracy
+                </span>
+
+                <strong>
+                    {{ profile.average_score }}%
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- Best Score -->
+
+        <div class="profile-stat-card">
+
+            <div class="stat-icon">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+
+            <div class="stat-content">
+
+                <span>
+                    Best Score
+                </span>
+
+                <strong>
+                    {{ profile.best_score }}%
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- Knowledge Level -->
+
+        <div class="profile-stat-card">
+
+            <div class="stat-icon">
+                <i class="fa-solid fa-brain"></i>
+            </div>
+
+            <div class="stat-content">
+
+                <span>
+                    Knowledge Level
+                </span>
+
+                <strong>
+                    {{ profile.current_level }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         ANSWER PERFORMANCE
+    ========================== -->
+
+    <div class="profile-lower-grid">
+
+
+        <!-- Answer Statistics -->
+
+        <section class="profile-card performance-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <span class="card-label">
+                        PERFORMANCE
+                    </span>
+
+                    <h3>
+                        Answer Statistics
+                    </h3>
+
+                </div>
+
+                <div class="header-icon">
+                    <i class="fa-solid fa-chart-simple"></i>
+                </div>
+
+            </div>
+
+
+            <div class="answer-stats">
+
+
+                <!-- Correct -->
+
+                <div class="answer-stat">
+
+                    <div class="answer-icon correct">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Correct Answers
+                        </span>
+
+                        <strong>
+                            {{ profile.total_correct }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Incorrect -->
+
+                <div class="answer-stat">
+
+                    <div class="answer-icon incorrect">
+                        <i class="fa-solid fa-xmark"></i>
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Incorrect Answers
+                        </span>
+
+                        <strong>
+                            {{ profile.total_incorrect }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Unanswered -->
+
+                <div class="answer-stat">
+
+                    <div class="answer-icon unanswered">
+                        <i class="fa-solid fa-minus"></i>
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Unanswered
+                        </span>
+
+                        <strong>
+                            {{ profile.total_unanswered }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             LATEST ASSESSMENT
+        ========================== -->
+
+        <section class="profile-card latest-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <span class="card-label">
+                        LATEST
+                    </span>
+
+                    <h3>
+                        Most Recent Assessment
+                    </h3>
+
+                </div>
+
+                <div class="header-icon">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                </div>
+
+            </div>
+
+
+            {% if profile.latest %}
+
+                <div class="latest-assessment">
+
+
+                    <div class="latest-domain">
+
+                        <div class="domain-icon">
+                            <i class="fa-solid fa-layer-group"></i>
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                {{ profile.latest.domain.replace('_', ' ')|title }}
+                            </strong>
+
+                            <span>
+                                {{ profile.latest.difficulty|title }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="latest-score">
+
+                        {% if profile.latest.score is not none %}
+
+                            <strong>
+                                {{ profile.latest.score|round|int }}%
+                            </strong>
+
+                            <span>
+                                Score
+                            </span>
+
+                        {% else %}
+
+                            <strong>
+                                —
+                            </strong>
+
+                            <span>
+                                Score
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <div class="latest-details">
+
+                    <div>
+
+                        <span>
+                            Status
+                        </span>
+
+                        <strong>
+                            {{ profile.latest.status.replace('_', ' ')|title }}
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Knowledge Level
+                        </span>
+
+                        <strong>
+                            {{ profile.latest.knowledge_level or '—' }}
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Warnings
+                        </span>
+
+                        <strong>
+                            {{ profile.latest.warning_count }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <a
+                    href="/results/{{ profile.latest.id }}"
+                    class="view-result-btn"
+                >
+
+                    View Assessment
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+
+            {% else %}
+
+
+                <div class="empty-state">
+
+                    <i class="fa-solid fa-chart-line"></i>
+
+                    <h4>
+                        No assessments yet
+                    </h4>
+
+                    <p>
+                        Complete your first assessment to see your
+                        performance here.
+                    </p>
+
+                    <a href="/dashboard">
+
+                        Start an Assessment
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+
+            {% endif %}
+
+        </section>
+
+    </div>
+
+
+    <!-- =========================
+         DOMAIN PERFORMANCE
+    ========================== -->
+
+    <h2 class="section-title">
+        Domain Performance
+    </h2>
+
+
+    <section class="profile-card domain-performance-card">
+
+
+        {% if profile.domain_performance %}
+
+
+            <div class="domain-performance-list">
+
+
+                {% for domain in profile.domain_performance %}
+
+
+                    <div class="domain-performance">
+
+
+                        <div class="domain-performance-info">
+
+
+                            <div class="domain-name">
+
+
+                                <div class="small-domain-icon">
+                                    <i class="fa-solid fa-layer-group"></i>
+                                </div>
+
+
+                                <div>
+
+                                    <strong>
+                                        {{ domain.domain.replace('_', ' ')|title }}
+                                    </strong>
+
+                                    <span>
+
+                                        {{ domain.tests }}
+
+                                        {% if domain.tests == 1 %}
+                                            assessment
+                                        {% else %}
+                                            assessments
+                                        {% endif %}
+
+                                    </span>
+
+                                </div>
+
+
+                            </div>
+
+
+                            <strong class="domain-score">
+                                {{ domain.average|int }}%
+                            </strong>
+
+
+                        </div>
+
+
+                        <!-- Progress Bar -->
+
+                        <div class="progress-track">
+
+                            <div
+                                class="progress-fill"
+                                style="width: {{ domain.average|int }}%;"
+                            ></div>
+
+                        </div>
+
+
+                    </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="empty-domain">
+
+                <i class="fa-solid fa-chart-column"></i>
+
+                <p>
+                    Domain performance will appear after completing
+                    assessments.
+                </p>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </section>
+
+
+    <!-- =========================
+         RECENT ASSESSMENTS
+    ========================== -->
+
+    <h2 class="section-title">
+        Recent Assessments
+    </h2>
+
+
+    <section class="profile-card recent-assessments-card">
+
+
+        {% if profile.recent_exams %}
+
+
+            <div class="recent-assessments-list">
+
+
+                {% for exam in profile.recent_exams %}
+
+
+                    <a
+                        href="/results/{{ exam.id }}"
+                        class="recent-assessment"
+                    >
+
+
+                        <div class="recent-left">
+
+
+                            <div class="recent-icon">
+                                <i class="fa-solid fa-file-lines"></i>
+                            </div>
+
+
+                            <div class="recent-info">
+
+                                <strong>
+                                    {{ exam.domain.replace('_', ' ')|title }}
+                                </strong>
+
+                                <span>
+
+                                    {{ exam.difficulty|title }}
+
+                                    ·
+
+                                    {{ exam.status.replace('_', ' ')|title }}
+
+                                </span>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="recent-right">
+
+
+                            {% if exam.score is not none %}
+
+                                <strong>
+                                    {{ exam.score|round|int }}%
+                                </strong>
+
+                            {% else %}
+
+                                <strong>
+                                    —
+                                </strong>
+
+                            {% endif %}
+
+
+                            <i class="fa-solid fa-chevron-right"></i>
+
+
+                        </div>
+
+
+                    </a>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="empty-state">
+
+                <i class="fa-solid fa-file-circle-question"></i>
+
+                <h4>
+                    No assessment history
+                </h4>
+
+                <p>
+                    Your completed assessments will appear here.
+                </p>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </section>
+
+
+</div>
+
+{% endblock %}

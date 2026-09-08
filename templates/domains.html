@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}Domains | AssessIQ AI{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/domains.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="domains-page">
+
+    <!-- PAGE HEADER -->
+
+    <div class="domains-header">
+
+        <div>
+            <span class="page-label">ASSESSMENTS</span>
+
+            <h1>Assessment Domains</h1>
+
+            <p>
+                Choose a domain to begin your AI-powered assessment.
+            </p>
+        </div>
+
+        <a href="/dashboard" class="back-dashboard">
+            <i class="fa-solid fa-arrow-left"></i>
+            Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- DOMAIN GRID -->
+
+    <div class="domain-grid">
+
+        {% for domain in domains %}
+
+        <div class="domain-card">
+
+            <div class="domain-card-top">
+
+                <div class="domain-icon">
+                    <i class="fa-solid fa-{{ domain.icon }}"></i>
+                </div>
+
+                <div class="domain-arrow">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </div>
+
+            </div>
+
+
+            <div class="domain-content">
+
+                <h2>
+                    {{ domain.name }}
+                </h2>
+
+                <p>
+                    {{ domain.description }}
+                </p>
+
+            </div>
+
+
+            <a
+                href="/difficulty/{{ domain.slug }}"
+                class="domain-action"
+            >
+
+                <span>Choose Domain</span>
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

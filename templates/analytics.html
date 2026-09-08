@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AssessIQ AI | Performance</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/analytics.css') }}">
+</head>
+<body>
+    <div class="analytics-page">
+
+        <header class="analytics-header">
+            <a href="{{ url_for('dashboard') }}" class="brand" aria-label="AssessIQ AI home">
+                <span class="brand-mark">A</span>
+                <span class="brand-text">AssessIQ AI</span>
+            </a>
+
+            <a href="{{ url_for('dashboard') }}" class="dashboard-btn">
+                ← Dashboard
+            </a>
+        </header>
+
+        <main class="analytics-container">
+
+            <section class="analytics-intro">
+                <div class="intro-copy">
+                    <span class="eyebrow">Performance</span>
+                    <h1>AI performance overview</h1>
+                    <p>
+                        Monitor your assessment trends, domain mastery, and momentum across each exam.
+                    </p>
+                </div>
+
+                <div class="score-pill">
+                    <span>Overall score</span>
+                    <strong>{{ analytics.average if analytics.tests else 0 }}%</strong>
+                </div>
+            </section>
+
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">▣</div>
+                    <div class="stat-content">
+                        <strong>{{ analytics.tests or 0 }}</strong>
+                        <span>Tests taken</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon success-icon">★</div>
+                    <div class="stat-content">
+                        <strong>{{ analytics.average if analytics.tests else 0 }}%</strong>
+                        <span>Average score</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon primary-icon">↑</div>
+                    <div class="stat-content">
+                        <strong>{% if analytics.best != '—' %}{{ analytics.best|replace('_', ' ')|title }}{% else %}No data{% endif %}</strong>
+                        <span>Best domain</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon warning-icon">↓</div>
+                    <div class="stat-content">
+                        <strong>{% if analytics.weakest != '—' %}{{ analytics.weakest|replace('_', ' ')|title }}{% else %}No data{% endif %}</strong>
+                        <span>Needs focus</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel">
+                <div class="panel-header">
+                    <div>
+                        <span class="panel-label">Domain performance</span>
+                        <h2>Performance by domain</h2>
+                    </div>
+                    <span class="muted-pill">{{ analytics.domains|length if analytics.domains else 0 }} tracked</span>
+                </div>
+
+                {% if analytics.domains %}
+                    <div class="domain-list">
+                        {% for item in analytics.domains %}
+                        <div class="domain-row">
+                            <div class="domain-top">
+                                <strong>{{ item.domain|replace('_', ' ')|title }}</strong>
+                                <span>{{ item.score }}%</span>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-fill" style="width: {{ item.score }}%"></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="empty-state">
+                        <div class="empty-icon">—</div>
+                        <h3>No performance data yet</h3>
+                        <p>Complete your first assessment to unlock your domain performance insights.</p>
+                    </div>
+                {% endif %}
+            </section>
+
+            <section class="insights-grid">
+                <div class="insight-card">
+                    <div class="insight-icon">✦</div>
+                    <div>
+                        <span class="panel-label">Strength</span>
+                        <h3>{% if analytics.best != '—' %}{{ analytics.best|replace('_', ' ')|title }}{% else %}Pending{% endif %}</h3>
+                        <p>Your strongest domain is currently giving you the best performance and confidence.</p>
+                    </div>
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-icon">◎</div>
+                    <div>
+                        <span class="panel-label">Focus area</span>
+                        <h3>{% if analytics.weakest != '—' %}{{ analytics.weakest|replace('_', ' ')|title }}{% else %}Pending{% endif %}</h3>
+                        <p>Prioritize extra practice in this topic area to improve your overall average.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="bottom-actions">
+                <a href="{{ url_for('history') }}" class="secondary-btn">View Exam History</a>
+                <a href="{{ url_for('dashboard') }}" class="primary-btn">Back to Dashboard</a>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,348 @@
+{% extends "base.html" %}
+
+{% block title %}Login | AssessIQ AI{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="login-page">
+
+    <!-- Floating Background -->
+    <div class="floating-circle one"></div>
+    <div class="floating-circle two"></div>
+    <div class="floating-circle three"></div>
+
+
+    <!-- =====================================================
+         LOGIN CONTAINER
+         ===================================================== -->
+
+    <div class="login-container">
+
+
+        <!-- =================================================
+             LEFT LOGIN SECTION
+             ================================================= -->
+
+        <div class="login-left">
+
+
+            <!-- Clickable AssessIQ AI Logo -->
+            <a href="/" class="brand">
+
+                <i class="fa-solid fa-brain"></i>
+
+                <div class="brand-text">
+
+                    <h2>AssessIQ AI</h2>
+
+                    <span>
+                        Adaptive Intelligence Assessment Platform
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- Login Heading -->
+
+            <h1>
+                Welcome Back
+            </h1>
+
+
+            <p class="subtitle">
+                Adaptive AI assessments with intelligent proctoring,
+                real-time analytics, and personalized skill evaluation.
+            </p>
+
+
+            <div class="feature-list">
+            </div>
+
+
+            <!-- =================================================
+                 LOGIN FORM
+                 ================================================= -->
+
+            <form action="/login" method="POST">
+
+
+                <!-- Username -->
+
+                <label for="username">
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Username"
+                    required
+                >
+
+
+                <!-- Password -->
+
+                <div class="password-field">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        minlength="8"
+                        required
+                        placeholder="Enter your password"
+                    >
+
+                    <small id="password-requirement">
+                        Password must be at least 8 characters.
+                    </small>
+
+                </div>
+
+
+                <!-- =================================================
+                     LOGIN OPTIONS
+                     ================================================= -->
+
+                <div class="login-options">
+
+
+                    <!-- Remember Me -->
+
+                    <div class="remember-me">
+
+                        <input
+                            type="checkbox"
+                            id="remember"
+                            name="remember"
+                        >
+
+                        <label for="remember">
+                            Remember me
+                        </label>
+
+                    </div>
+
+
+                    <!-- Forgot Password -->
+
+                    <a href="/forgot-password">
+                        Forgot Password?
+                    </a>
+
+
+                </div>
+
+
+                <!-- =================================================
+                     SIGN IN BUTTON
+                     ================================================= -->
+
+                <button type="submit">
+
+                    Sign In
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </button>
+
+
+            </form>
+
+
+            <!-- Footer -->
+
+            <div class="footer-login">
+
+                AssessIQ AI v1.0
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =====================================================
+             RIGHT SYSTEM STATUS SECTION
+             ===================================================== -->
+
+        <div class="login-right">
+
+
+            <!-- AI Icon -->
+
+            <div class="ai-circle">
+
+                <i class="fa-solid fa-brain"></i>
+
+            </div>
+
+
+            <!-- System Status -->
+
+            <h2>
+                System Status
+            </h2>
+
+
+            <p class="ai-description">
+                Real-time monitoring of the examination environment.
+            </p>
+
+
+            <!-- AI Engine -->
+
+            <div class="status-card">
+
+                <div>
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    AI Engine
+
+                </div>
+
+                <span>
+                    Online
+                </span>
+
+            </div>
+
+
+            <!-- Database -->
+
+            <div class="status-card">
+
+                <div>
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    Database
+
+                </div>
+
+                <span>
+                    Connected
+                </span>
+
+            </div>
+
+
+            <!-- Camera -->
+
+            <div class="status-card">
+
+                <div>
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    Camera
+
+                </div>
+
+                <span>
+                    Ready
+                </span>
+
+            </div>
+
+
+            <!-- Question Bank -->
+
+            <div class="status-card">
+
+                <div>
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    Question Bank
+
+                </div>
+
+                <span>
+                    22,854 Loaded
+                </span>
+
+            </div>
+
+
+            <!-- AI Proctor -->
+
+            <div class="status-card">
+
+                <div>
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    AI Proctor
+
+                </div>
+
+                <span>
+                    Active
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     PASSWORD VALIDATION
+     ========================================================= -->
+
+<script>
+
+const password = document.getElementById("password");
+
+const requirement =
+    document.getElementById("password-requirement");
+
+
+password.addEventListener("input", function () {
+
+    if (password.value.length < 8) {
+
+        requirement.textContent =
+            "Password must be at least 8 characters.";
+
+        requirement.classList.add("invalid");
+
+        requirement.classList.remove("valid");
+
+    }
+
+    else {
+
+        requirement.textContent =
+            "Password requirement satisfied.";
+
+        requirement.classList.add("valid");
+
+        requirement.classList.remove("invalid");
+
+    }
+
+});
+
+</script>
+
+
+{% endblock %}
